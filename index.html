@@ -435,85 +435,47 @@
   const GOOGLE_CLIENT_ID = '531427181975-jvnaeguk39tl2bnobhgci76gtad2cmvp.apps.googleusercontent.com';
   let gmailConnected = false;
   let googleUser = null;
+  let tokenClient = null;
 
-  // Initialize Google Identity Services
   window.addEventListener('load', function(){
-    google.accounts.id.initialize({
+    tokenClient = google.accounts.oauth2.initTokenClient({
       client_id: GOOGLE_CLIENT_ID,
-      callback: handleGoogleSignIn,
-      auto_select: false,
-      cancel_on_tap_outside: true,
+      scope: 'email profile',
+      callback: function(tokenResponse) {
+        if(tokenResponse && tokenResponse.access_token) {
+          fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+            headers: { Authorization: 'Bearer ' + tokenResponse.access_token }
+          })
+          .then(function(r){ return r.json(); })
+          .then(function(info){
+            googleUser = info;
+            gmailConnected = true;
+            document.getElementById('gmailText').textContent = info.email;
+            document.getElementById('gmailText').style.color = '#fff';
+            document.getElementById('gmailBadge').style.display = 'inline-block';
+            document.getElementById('gmailBtn').style.borderColor = '#2D6FFF';
+            document.getElementById('gmailError').style.display = 'none';
+            var nameInput = document.getElementById('nameInput');
+            if(!nameInput.value.trim() && info.name) nameInput.value = info.name;
+            if(info.picture){
+              var preview = document.getElementById('picPreview');
+              var icon = document.getElementById('picIcon');
+              var circle = document.getElementById('picCircle');
+              preview.src = info.picture;
+              preview.style.display = 'block';
+              icon.style.display = 'none';
+              circle.style.borderColor = '#2D6FFF';
+              circle.style.borderStyle = 'solid';
+            }
+          });
+        }
+      }
     });
   });
 
-  function handleGoogleSignIn(response) {
-    // Decode the JWT credential
-    const payload = JSON.parse(atob(response.credential.split('.')[1]));
-    googleUser = payload;
-    gmailConnected = true;
-
-    // Update UI with real Gmail info
-    const email = payload.email;
-    const name = payload.name || '';
-
-    document.getElementById('gmailText').textContent = email;
-    document.getElementById('gmailText').style.color = '#fff';
-    document.getElementById('gmailBadge').style.display = 'inline-block';
-    document.getElementById('gmailBtn').style.borderColor = '#2D6FFF';
-    document.getElementById('gmailError').style.display = 'none';
-
-    // Auto-fill name field if empty
-    const nameInput = document.getElementById('nameInput');
-    if(!nameInput.value.trim() && name) {
-      nameInput.value = name;
-    }
-
-    // Show profile photo if available
-    if(payload.picture) {
-      const preview = document.getElementById('picPreview');
-      const icon = document.getElementById('picIcon');
-      const circle = document.getElementById('picCircle');
-      preview.src = payload.picture;
-      preview.style.display = 'block';
-      icon.style.display = 'none';
-      circle.style.borderColor = '#2D6FFF';
-      circle.style.borderStyle = 'solid';
-    }
-  }
-
   document.getElementById('gmailBtn').addEventListener('click', function(){
     if(gmailConnected) return;
-    // Trigger Google sign-in popup
-    google.accounts.id.prompt((notification) => {
-      if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-        // Fallback: use renderButton approach via a hidden div
-        const tempDiv = document.createElement('div');
-        tempDiv.style.display = 'none';
-        document.body.appendChild(tempDiv);
-        google.accounts.oauth2.initTokenClient({
-          client_id: GOOGLE_CLIENT_ID,
-          scope: 'email profile',
-          callback: (tokenResponse) => {
-            if(tokenResponse.access_token) {
-              fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-                headers: { Authorization: 'Bearer ' + tokenResponse.access_token }
-              }).then(r => r.json()).then(info => {
-                handleGoogleSignIn({ credential: btoa(JSON.stringify({})) });
-                googleUser = info;
-                gmailConnected = true;
-                document.getElementById('gmailText').textContent = info.email;
-                document.getElementById('gmailText').style.color = '#fff';
-                document.getElementById('gmailBadge').style.display = 'inline-block';
-                document.getElementById('gmailBtn').style.borderColor = '#2D6FFF';
-                document.getElementById('gmailError').style.display = 'none';
-                if(!document.getElementById('nameInput').value.trim() && info.name)
-                  document.getElementById('nameInput').value = info.name;
-              });
-            }
-          }
-        }).requestAccessToken();
-      }
-    });
+    tokenClient.requestAccessToken({ prompt: 'select_account' });
   });
 
   // form submit
@@ -525,7 +487,7 @@
     if(!name){ document.getElementById('nameError').style.display='block'; valid=false; }
     if(!gmailConnected){ document.getElementById('gmailError').style.display='block'; valid=false; }
     if(!valid) return;
-    const displayName = (googleUser && googleUser.name) ? googleUser.name : name;
+    var displayName = (googleUser && googleUser.name) ? googleUser.name : name;
     document.getElementById('welcome-msg').textContent = 'Welcome, ' + displayName + '!';
     document.getElementById('form-view').style.display = 'none';
     document.getElementById('success-view').style.display = 'flex';
