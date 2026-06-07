@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Growth — Freelance Platform</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --black:#0A0A0F;
+    --dark:#111118;
+    --card:#16161F;
+    --blue:#2D6FFF;
+    --blue-light:#5B8FFF;
+    --blue-dim:#1a3a8a;
+    --border:rgba(255,255,255,0.08);
+    --text:#F0F0F8;
+    --muted:#8888AA;
+    --tag:#1e1e2e;
+  }
+  body{background:var(--black);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh}
+
+  /* ── NAV ── */
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 32px;border-bottom:1px solid var(--border);background:var(--black);position:sticky;top:0;z-index:100}
+  .logo{font-size:20px;font-weight:600;color:#fff;display:flex;align-items:center;gap:7px;cursor:pointer}
+  .logo-dot{width:9px;height:9px;border-radius:50%;background:var(--blue)}
+  .nav-btns{display:flex;gap:8px}
+  .btn-outline{background:transparent;border:1px solid var(--border);color:var(--text);padding:7px 18px;border-radius:8px;font-size:13px;cursor:pointer;transition:.2s}
+  .btn-outline:hover{border-color:var(--blue-light);color:#fff}
+  .btn-blue{background:var(--blue);border:none;color:#fff;padding:7px 18px;border-radius:8px;font-size:13px;cursor:pointer;transition:.2s}
+  .btn-blue:hover{background:var(--blue-light)}
+
+  /* ── PAGES ── */
+  .page{display:none}
+  .page.active{display:block}
+
+  /* ── HERO ── */
+  .hero{padding:64px 32px 48px;text-align:center;background:var(--black)}
+  .hero-tag{display:inline-flex;align-items:center;gap:6px;background:var(--blue-dim);color:var(--blue-light);font-size:12px;padding:5px 16px;border-radius:20px;margin-bottom:22px;font-weight:500}
+  .hero h1{font-size:38px;font-weight:700;color:#fff;margin-bottom:14px;line-height:1.25}
+  .hero h1 span{color:var(--blue-light)}
+  .hero p{font-size:16px;color:var(--muted);margin-bottom:32px}
+  .search-row{display:flex;gap:8px;max-width:520px;margin:0 auto 40px}
+  .search-row input{flex:1;background:#1a1a26;border:1px solid var(--border);color:#fff;border-radius:8px;padding:12px 18px;font-size:14px}
+  .search-row input::placeholder{color:#555566}
+  .search-row input:focus{outline:none;border-color:var(--blue)}
+  .search-row button{background:var(--blue);border:none;color:#fff;padding:12px 24px;border-radius:8px;font-size:14px;cursor:pointer}
+  .stats-row{display:flex;justify-content:center;gap:40px;padding-bottom:48px;flex-wrap:wrap}
+  .stat-item{text-align:center}
+  .stat-num{font-size:24px;font-weight:700;color:#fff}
+  .stat-label{font-size:12px;color:var(--muted);margin-top:3px}
+
+  /* ── DIVIDER ── */
+  .divider{height:1px;background:var(--border);margin:0 32px}
+
+  /* ── SECTION ── */
+  .section{padding:32px 32px 0}
+  .sec-title{font-size:18px;font-weight:600;color:#fff;margin-bottom:4px}
+  .sec-sub{font-size:13px;color:var(--muted);margin-bottom:18px}
+
+  /* ── CATEGORIES ── */
+  .cats{display:flex;gap:8px;flex-wrap:wrap;padding:0 32px 24px}
+  .cat{padding:8px 18px;border-radius:20px;font-size:13px;border:1px solid var(--border);cursor:pointer;color:var(--muted);background:transparent;transition:.2s}
+  .cat:hover{border-color:var(--blue-light);color:#fff}
+  .cat.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+  /* ── JOB CARDS ── */
+  .jobs{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;padding:0 32px 32px}
+  .job-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;cursor:pointer;transition:.2s}
+  .job-card:hover{border-color:var(--blue-dim);transform:translateY(-2px)}
+  .job-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+  .job-title{font-size:14px;font-weight:600;color:#fff}
+  .job-budget{font-size:13px;color:var(--blue-light);font-weight:600}
+  .job-desc{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:14px}
+  .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+  .tag{font-size:11px;padding:3px 10px;background:var(--tag);border-radius:4px;color:var(--muted);border:1px solid var(--border)}
+  .job-footer{display:flex;align-items:center;justify-content:space-between}
+  .poster{display:flex;align-items:center;gap:8px}
+  .av{width:28px;height:28px;border-radius:50%;background:var(--blue-dim);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:var(--blue-light)}
+  .poster-name{font-size:12px;color:var(--muted)}
+  .apply-btn{font-size:12px;padding:6px 14px;background:var(--blue);color:#fff;border:none;border-radius:6px;cursor:pointer}
+  .apply-btn:hover{background:var(--blue-light)}
+
+  /* ── FREELANCER CARDS ── */
+  .fl-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;padding:0 32px 32px}
+  .fl-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center;transition:.2s}
+  .fl-card:hover{border-color:var(--blue-dim)}
+  .fl-av{width:56px;height:56px;border-radius:50%;background:var(--blue-dim);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600;color:var(--blue-light);margin:0 auto 10px}
+  .new-pill{display:inline-block;background:#1a2a1a;color:#4CAF50;font-size:10px;padding:2px 10px;border-radius:10px;margin-bottom:6px;border:1px solid #2a4a2a}
+  .fl-name{font-size:14px;font-weight:600;color:#fff;margin-bottom:2px}
+  .fl-role{font-size:12px;color:var(--muted);margin-bottom:6px}
+  .fl-rate{font-size:13px;color:var(--blue-light);font-weight:600;margin-bottom:8px}
+  .fl-stars{font-size:12px;color:#EF9F27;margin-bottom:12px}
+  .msg-btn{width:100%;font-size:12px;padding:8px;background:transparent;border:1px solid var(--border);border-radius:8px;cursor:pointer;color:var(--muted);transition:.2s}
+  .msg-btn:hover{border-color:var(--blue-light);color:#fff}
+
+  /* ── WHY SECTION ── */
+  .why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;padding:0 32px 32px}
+  .why-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px}
+  .why-icon{font-size:24px;color:var(--blue-light);margin-bottom:10px}
+  .why-title{font-size:13px;font-weight:600;color:#fff;margin-bottom:4px}
+  .why-desc{font-size:12px;color:var(--muted);line-height:1.5}
+
+  /* ── CTA BANNER ── */
+  .cta{margin:0 32px 40px;background:var(--blue-dim);border:1px solid var(--blue);border-radius:14px;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .cta h3{font-size:17px;font-weight:600;color:#fff;margin-bottom:4px}
+  .cta p{font-size:13px;color:var(--blue-light)}
+  .cta-btn{background:var(--blue);border:none;color:#fff;padding:12px 24px;border-radius:8px;font-size:14px;cursor:pointer}
+  .cta-btn:hover{background:var(--blue-light)}
+
+  /* ── LOGIN PAGE ── */
+  .login-page{display:flex;align-items:center;justify-content:center;padding:48px 24px;min-height:calc(100vh - 60px)}
+  .login-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:40px 36px;width:100%;max-width:420px}
+  .login-card h2{font-size:24px;font-weight:700;color:#fff;text-align:center;margin-bottom:6px}
+  .login-card .sub{font-size:14px;color:var(--muted);text-align:center;margin-bottom:32px}
+
+  /* picture upload */
+  .pic-section{display:flex;flex-direction:column;align-items:center;margin-bottom:28px}
+  .pic-circle{width:96px;height:96px;border-radius:50%;background:#1a1a26;border:2px dashed var(--blue-dim);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;transition:.2s}
+  .pic-circle:hover{border-color:var(--blue)}
+  .pic-circle img{width:100%;height:100%;object-fit:cover;display:none}
+  .pic-circle i{font-size:26px;color:var(--muted)}
+  .pic-hint{font-size:12px;color:var(--muted);margin-top:8px}
+
+  /* fields */
+  .field{margin-bottom:20px}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:8px}
+  .field input{width:100%;background:#1a1a26;border:1px solid var(--border);color:#fff;border-radius:8px;padding:12px 16px;font-size:14px;transition:.2s}
+  .field input::placeholder{color:#555566}
+  .field input:focus{outline:none;border-color:var(--blue)}
+  .error{font-size:12px;color:#ff5566;margin-top:5px;display:none}
+
+  /* gmail row */
+  .gmail-row{display:flex;align-items:center;gap:10px;background:#1a1a26;border:1px solid var(--border);border-radius:8px;padding:12px 16px;margin-bottom:20px;cursor:pointer;transition:.2s}
+  .gmail-row:hover{border-color:var(--blue-dim)}
+  .gmail-text{font-size:14px;color:var(--text);flex:1}
+  .gmail-badge{font-size:11px;color:#4CAF50;background:#1a2a1a;border:1px solid #2a4a2a;padding:2px 8px;border-radius:10px;display:none}
+
+  .or-row{display:flex;align-items:center;gap:10px;margin-bottom:20px}
+  .or-line{flex:1;height:1px;background:var(--border)}
+  .or-text{font-size:12px;color:var(--muted)}
+
+  .join-btn{width:100%;background:var(--blue);border:none;color:#fff;padding:13px;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;transition:.2s}
+  .join-btn:hover{background:var(--blue-light)}
+  .terms{font-size:12px;color:var(--muted);text-align:center;margin-top:16px;line-height:1.6}
+  .terms span{color:var(--blue-light);cursor:pointer}
+
+  /* success */
+  .success-view{display:none;flex-direction:column;align-items:center;text-align:center;padding:20px 0}
+  .success-circle{width:76px;height:76px;border-radius:50%;background:var(--blue-dim);display:flex;align-items:center;justify-content:center;font-size:34px;color:var(--blue-light);margin-bottom:20px}
+  .success-view h2{font-size:22px;font-weight:700;color:#fff;margin-bottom:8px}
+  .success-view p{font-size:14px;color:var(--muted);margin-bottom:24px}
+  .success-btn{background:var(--blue);border:none;color:#fff;padding:12px 32px;border-radius:8px;font-size:14px;cursor:pointer}
+
+  /* footer */
+  footer{text-align:center;padding:24px;border-top:1px solid var(--border);font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="logo" onclick="showPage('home')">
+    <div class="logo-dot"></div>Growth
+  </div>
+  <div class="nav-btns">
+    <button class="btn-outline" onclick="showPage('login')">Log in</button>
+    <button class="btn-blue" onclick="showPage('login')">Join free</button>
+  </div>
+</nav>
+
+<!-- ════════════ HOME PAGE ════════════ -->
+<div class="page active" id="page-home">
+
+  <div class="hero">
+    <div class="hero-tag">⚡ Only 5% commission — keep 95% of what you earn</div>
+    <h1>The freelance platform built for<br><span>today's generation</span></h1>
+    <p>Beginners get hired. Clients save money. No hidden fees — ever.</p>
+    <div class="search-row">
+      <input type="text" placeholder="Search jobs, skills, freelancers..." />
+      <button>🔍 Search</button>
+    </div>
+    <div class="stats-row">
+      <div class="stat-item"><div class="stat-num">12K+</div><div class="stat-label">Freelancers</div></div>
+      <div class="stat-item"><div class="stat-num">5%</div><div class="stat-label">Only commission</div></div>
+      <div class="stat-item"><div class="stat-num">Free</div><div class="stat-label">Client meetings</div></div>
+      <div class="stat-item"><div class="stat-num">48h</div><div class="stat-label">Avg hire time</div></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section">
+    <div class="sec-title">Browse categories</div>
+    <div class="sec-sub">Find work that matches your skills</div>
+  </div>
+  <div class="cats">
+    <div class="cat active" onclick="setActive(this)">All</div>
+    <div class="cat" onclick="setActive(this)">🎨 Design</div>
+    <div class="cat" onclick="setActive(this)">💻 Development</div>
+    <div class="cat" onclick="setActive(this)">✏️ Writing</div>
+    <div class="cat" onclick="setActive(this)">🎬 Video</div>
+    <div class="cat" onclick="setActive(this)">📢 Marketing</div>
+    <div class="cat" onclick="setActive(this)">🤖 AI & Data</div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title">Latest jobs</div>
+    <div class="sec-sub">Fresh opportunities posted today</div>
+  </div>
+  <div class="jobs">
+    <div class="job-card">
+      <div class="job-top"><span class="job-title">Logo design for tech startup</span><span class="job-budget">$20–$50</span></div>
+      <p class="job-desc">Need a clean modern logo. Simple, bold and memorable for a global brand.</p>
+      <div class="tags"><span class="tag">Logo</span><span class="tag">Illustrator</span><span class="tag">Branding</span></div>
+      <div class="job-footer">
+        <div class="poster"><div class="av">JK</div><span class="poster-name">James K. · USA</span></div>
+        <button class="apply-btn" onclick="showPage('login')">Apply free</button>
+      </div>
+    </div>
+    <div class="job-card">
+      <div class="job-top"><span class="job-title">WordPress site setup</span><span class="job-budget">$30–$80</span></div>
+      <p class="job-desc">Set up a blog with theme, plugins and 3 sample posts. Mobile friendly required.</p>
+      <div class="tags"><span class="tag">WordPress</span><span class="tag">HTML</span><span class="tag">CSS</span></div>
+      <div class="job-footer">
+        <div class="poster"><div class="av">SA</div><span class="poster-name">Sara A. · UK</span></div>
+        <button class="apply-btn" onclick="showPage('login')">Apply free</button>
+      </div>
+    </div>
+    <div class="job-card">
+      <div class="job-top"><span class="job-title">Instagram Reels editing x5</span><span class="job-budget">$15–$40</span></div>
+      <p class="job-desc">Edit 5 short videos with captions, transitions and music. Fast delivery needed.</p>
+      <div class="tags"><span class="tag">Video</span><span class="tag">Reels</span><span class="tag">CapCut</span></div>
+      <div class="job-footer">
+        <div class="poster"><div class="av">MR</div><span class="poster-name">Maria R. · Canada</span></div>
+        <button class="apply-btn" onclick="showPage('login')">Apply free</button>
+      </div>
+    </div>
+    <div class="job-card">
+      <div class="job-top"><span class="job-title">Social media content pack</span><span class="job-budget">$25–$60</span></div>
+      <p class="job-desc">Create 10 posts for Instagram and Twitter. Engaging copy with matching visuals.</p>
+      <div class="tags"><span class="tag">Social Media</span><span class="tag">Copywriting</span><span class="tag">Canva</span></div>
+      <div class="job-footer">
+        <div class="poster"><div class="av">TR</div><span class="poster-name">Tom R. · Australia</span></div>
+        <button class="apply-btn" onclick="showPage('login')">Apply free</button>
+      </div>
+    </div>
+    <div class="job-card">
+      <div class="job-top"><span class="job-title">Python script for data scraping</span><span class="job-budget">$40–$100</span></div>
+      <p class="job-desc">Build a simple scraper to extract product data from 3 e-commerce websites.</p>
+      <div class="tags"><span class="tag">Python</span><span class="tag">Scrapy</span><span class="tag">Data</span></div>
+      <div class="job-footer">
+        <div class="poster"><div class="av">LK</div><span class="poster-name">Li K. · Singapore</span></div>
+        <button class="apply-btn" onclick="showPage('login')">Apply free</button>
+      </div>
+    </div>
+    <div class="job-card">
+      <div class="job-top"><span class="job-title">Blog article writing (x3)</span><span class="job-budget">$10–$30</span></div>
+      <p class="job-desc">Write 3 SEO-friendly articles on tech topics. 800 words each, original content.</p>
+      <div class="tags"><span class="tag">Writing</span><span class="tag">SEO</span><span class="tag">Tech</span></div>
+      <div class="job-footer">
+        <div class="poster"><div class="av">AN</div><span class="poster-name">Anna N. · Germany</span></div>
+        <button class="apply-btn" onclick="showPage('login')">Apply free</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section">
+    <div class="sec-title">Fresh talent — give them their first chance</div>
+    <div class="sec-sub">New freelancers ready to prove themselves at great prices</div>
+  </div>
+  <div class="fl-grid">
+    <div class="fl-card">
+      <div class="fl-av">AH</div>
+      <div class="new-pill">New talent</div>
+      <div class="fl-name">Ali Hassan</div>
+      <div class="fl-role">Graphic Designer · Pakistan</div>
+      <div class="fl-rate">From $10 / project</div>
+      <div class="fl-stars">★★★★★</div>
+      <button class="msg-btn" onclick="showPage('login')">💬 Message free</button>
+    </div>
+    <div class="fl-card">
+      <div class="fl-av">FN</div>
+      <div class="new-pill">New talent</div>
+      <div class="fl-name">Fatima Noor</div>
+      <div class="fl-role">Content Writer · India</div>
+      <div class="fl-rate">From $8 / article</div>
+      <div class="fl-stars">★★★★★</div>
+      <button class="msg-btn" onclick="showPage('login')">💬 Message free</button>
+    </div>
+    <div class="fl-card">
+      <div class="fl-av">ZK</div>
+      <div class="new-pill">New talent</div>
+      <div class="fl-name">Zaid Khan</div>
+      <div class="fl-role">Web Developer · Pakistan</div>
+      <div class="fl-rate">From $25 / project</div>
+      <div class="fl-stars">★★★★★</div>
+      <button class="msg-btn" onclick="showPage('login')">💬 Message free</button>
+    </div>
+    <div class="fl-card">
+      <div class="fl-av">LM</div>
+      <div class="new-pill">New talent</div>
+      <div class="fl-name">Lena M.</div>
+      <div class="fl-role">Video Editor · Nigeria</div>
+      <div class="fl-rate">From $12 / video</div>
+      <div class="fl-stars">★★★★★</div>
+      <button class="msg-btn" onclick="showPage('login')">💬 Message free</button>
+    </div>
+  </div>
+
+  <div class="divider" style="margin-bottom:32px"></div>
+
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-icon">💸</div>
+      <div class="why-title">Only 5% fee</div>
+      <div class="why-desc">Keep 95% of every payment. Fiverr takes 20%.</div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">💬</div>
+      <div class="why-title">Free meetings</div>
+      <div class="why-desc">Talk to clients directly — no pay-to-chat fees ever.</div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🚀</div>
+      <div class="why-title">Beginners first</div>
+      <div class="why-desc">New freelancers get featured, not buried.</div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🌍</div>
+      <div class="why-title">100% global</div>
+      <div class="why-desc">Work with anyone, from anywhere in the world.</div>
+    </div>
+  </div>
+
+  <div class="cta">
+    <div>
+      <h3>Have a skill? Start earning today.</h3>
+      <p>Free to join — no subscription, no joining fee, no tricks.</p>
+    </div>
+    <button class="cta-btn" onclick="showPage('login')">Get started →</button>
+  </div>
+
+  <footer>© 2026 Growth — Where beginners grow into professionals</footer>
+</div>
+
+<!-- ════════════ LOGIN PAGE ════════════ -->
+<div class="page" id="page-login">
+  <div class="login-page">
+    <div class="login-card">
+
+      <div id="form-view">
+        <h2>Create your account</h2>
+        <p class="sub">Join free — takes less than a minute</p>
+
+        <div class="pic-section">
+          <div class="pic-circle" id="picCircle" onclick="document.getElementById('picInput').click()">
+            <img id="picPreview" alt="Profile photo"/>
+            <i id="picIcon" style="font-size:26px;color:var(--muted)">📷</i>
+          </div>
+          <input type="file" accept="image/*" id="picInput" style="display:none"/>
+          <span class="pic-hint">Tap to upload your photo</span>
+        </div>
+
+        <div class="field">
+          <label>Your full name</label>
+          <input type="text" id="nameInput" placeholder="e.g. Ali Hassan"/>
+          <div class="error" id="nameError">Please enter your name</div>
+        </div>
+
+        <div class="or-row">
+          <div class="or-line"></div>
+          <span class="or-text">connect with Gmail</span>
+          <div class="or-line"></div>
+        </div>
+
+        <div class="gmail-row" id="gmailBtn">
+          <span style="font-size:18px">📧</span>
+          <span class="gmail-text" id="gmailText">Connect your Gmail</span>
+          <span class="gmail-badge" id="gmailBadge">✓ Connected</span>
+        </div>
+        <div class="error" id="gmailError">Please connect your Gmail to continue</div>
+
+        <button class="join-btn" id="joinBtn">Create my account</button>
+        <div class="terms">By joining you agree to our <span>Terms</span> and <span>Privacy Policy</span></div>
+      </div>
+
+      <div class="success-view" id="success-view">
+        <div class="success-circle">✓</div>
+        <h2 id="welcome-msg">Welcome to Growth!</h2>
+        <p>Your account is ready. Start finding work or hire talent — completely free.</p>
+        <button class="success-btn" onclick="showPage('home')">Go to homepage →</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  function showPage(name){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById('page-'+name).classList.add('active');
+    window.scrollTo(0,0);
+  }
+
+  function setActive(el){
+    document.querySelectorAll('.cat').forEach(c=>c.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  // picture upload
+  const picInput = document.getElementById('picInput');
+  picInput.addEventListener('change', function(){
+    const file = this.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      const preview = document.getElementById('picPreview');
+      const icon = document.getElementById('picIcon');
+      const circle = document.getElementById('picCircle');
+      preview.src = e.target.result;
+      preview.style.display = 'block';
+      icon.style.display = 'none';
+      circle.style.borderColor = '#2D6FFF';
+      circle.style.borderStyle = 'solid';
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // ── REAL GOOGLE OAUTH ──
+  const GOOGLE_CLIENT_ID = '531427181975-jvnaeguk39tl2bnobhgci76gtad2cmvp.apps.googleusercontent.com';
+  let gmailConnected = false;
+  let googleUser = null;
+
+  // Initialize Google Identity Services
+  window.addEventListener('load', function(){
+    google.accounts.id.initialize({
+      client_id: GOOGLE_CLIENT_ID,
+      callback: handleGoogleSignIn,
+      auto_select: false,
+      cancel_on_tap_outside: true,
+    });
+  });
+
+  function handleGoogleSignIn(response) {
+    // Decode the JWT credential
+    const payload = JSON.parse(atob(response.credential.split('.')[1]));
+    googleUser = payload;
+    gmailConnected = true;
+
+    // Update UI with real Gmail info
+    const email = payload.email;
+    const name = payload.name || '';
+
+    document.getElementById('gmailText').textContent = email;
+    document.getElementById('gmailText').style.color = '#fff';
+    document.getElementById('gmailBadge').style.display = 'inline-block';
+    document.getElementById('gmailBtn').style.borderColor = '#2D6FFF';
+    document.getElementById('gmailError').style.display = 'none';
+
+    // Auto-fill name field if empty
+    const nameInput = document.getElementById('nameInput');
+    if(!nameInput.value.trim() && name) {
+      nameInput.value = name;
+    }
+
+    // Show profile photo if available
+    if(payload.picture) {
+      const preview = document.getElementById('picPreview');
+      const icon = document.getElementById('picIcon');
+      const circle = document.getElementById('picCircle');
+      preview.src = payload.picture;
+      preview.style.display = 'block';
+      icon.style.display = 'none';
+      circle.style.borderColor = '#2D6FFF';
+      circle.style.borderStyle = 'solid';
+    }
+  }
+
+  document.getElementById('gmailBtn').addEventListener('click', function(){
+    if(gmailConnected) return;
+    // Trigger Google sign-in popup
+    google.accounts.id.prompt((notification) => {
+      if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+        // Fallback: use renderButton approach via a hidden div
+        const tempDiv = document.createElement('div');
+        tempDiv.style.display = 'none';
+        document.body.appendChild(tempDiv);
+        google.accounts.oauth2.initTokenClient({
+          client_id: GOOGLE_CLIENT_ID,
+          scope: 'email profile',
+          callback: (tokenResponse) => {
+            if(tokenResponse.access_token) {
+              fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+                headers: { Authorization: 'Bearer ' + tokenResponse.access_token }
+              }).then(r => r.json()).then(info => {
+                handleGoogleSignIn({ credential: btoa(JSON.stringify({})) });
+                googleUser = info;
+                gmailConnected = true;
+                document.getElementById('gmailText').textContent = info.email;
+                document.getElementById('gmailText').style.color = '#fff';
+                document.getElementById('gmailBadge').style.display = 'inline-block';
+                document.getElementById('gmailBtn').style.borderColor = '#2D6FFF';
+                document.getElementById('gmailError').style.display = 'none';
+                if(!document.getElementById('nameInput').value.trim() && info.name)
+                  document.getElementById('nameInput').value = info.name;
+              });
+            }
+          }
+        }).requestAccessToken();
+      }
+    });
+  });
+
+  // form submit
+  document.getElementById('joinBtn').addEventListener('click', function(){
+    const name = document.getElementById('nameInput').value.trim();
+    let valid = true;
+    document.getElementById('nameError').style.display = 'none';
+    document.getElementById('gmailError').style.display = 'none';
+    if(!name){ document.getElementById('nameError').style.display='block'; valid=false; }
+    if(!gmailConnected){ document.getElementById('gmailError').style.display='block'; valid=false; }
+    if(!valid) return;
+    const displayName = (googleUser && googleUser.name) ? googleUser.name : name;
+    document.getElementById('welcome-msg').textContent = 'Welcome, ' + displayName + '!';
+    document.getElementById('form-view').style.display = 'none';
+    document.getElementById('success-view').style.display = 'flex';
+  });
+</script>
+</body>
+</html>
