@@ -4,235 +4,418 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Growth — Freelance Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <style>
-  *{box-sizing:border-box;margin:0;padding:0}
-  :root{
-    --black:#0A0A0F;--dark:#111118;--card:#16161F;--blue:#2D6FFF;
-    --blue-light:#5B8FFF;--blue-dim:#1a3a8a;--border:rgba(255,255,255,0.08);
-    --text:#F0F0F8;--muted:#8888AA;--tag:#1e1e2e;--green:#4CAF50;--red:#ff5566;
-  }
-  body{background:var(--black);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh}
-  .page{display:none}.page.active{display:block}
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#08080E;--dark:#0F0F18;--card:#13131E;--card2:#191927;
+  --blue:#3B6FFF;--blue-light:#6B8FFF;--blue-dim:#1a2a6a;--blue-glow:rgba(59,111,255,0.15);
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);
+  --text:#EEEEF8;--muted:#7777A0;--tag:#1a1a2e;
+  --green:#3ECF6E;--red:#FF4466;--orange:#FF9500;--yellow:#F5B800;
+  --font:'Plus Jakarta Sans',system-ui,sans-serif;--mono:'DM Mono',monospace;
+  --nav-h:60px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--text);font-family:var(--font);min-height:100vh;overflow-x:hidden}
+.page{display:none}.page.active{display:block}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--blue-dim);color:#fff}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--dark)}
+::-webkit-scrollbar-thumb{background:var(--blue-dim);border-radius:4px}
 
-  /* NAV */
-  .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 32px;border-bottom:1px solid var(--border);background:var(--black);position:sticky;top:0;z-index:100}
-  .logo{font-size:20px;font-weight:600;color:#fff;display:flex;align-items:center;gap:7px;cursor:pointer}
-  .logo-dot{width:9px;height:9px;border-radius:50%;background:var(--blue)}
-  .nav-btns{display:flex;gap:8px;align-items:center}
-  .btn-outline{background:transparent;border:1px solid var(--border);color:var(--text);padding:7px 18px;border-radius:8px;font-size:13px;cursor:pointer;transition:.2s}
-  .btn-outline:hover{border-color:var(--blue-light);color:#fff}
-  .btn-blue{background:var(--blue);border:none;color:#fff;padding:7px 18px;border-radius:8px;font-size:13px;cursor:pointer;transition:.2s}
-  .btn-blue:hover{background:var(--blue-light)}
-  .nav-user{display:none;align-items:center;gap:10px}
-  .nav-av{width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid var(--blue);cursor:pointer}
-  .nav-av-txt{width:32px;height:32px;border-radius:50%;background:var(--blue-dim);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--blue-light);cursor:pointer}
+/* ─── NAV ─────────────────────────────────────────────────── */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:var(--nav-h);border-bottom:1px solid var(--border);background:rgba(8,8,14,0.92);backdrop-filter:blur(20px);position:sticky;top:0;z-index:100}
+.logo{font-size:18px;font-weight:800;color:#fff;display:flex;align-items:center;gap:8px;cursor:pointer;letter-spacing:-.5px}
+.logo-dot{width:8px;height:8px;border-radius:50%;background:var(--blue);box-shadow:0 0 8px var(--blue)}
+.nav-btns{display:flex;gap:8px;align-items:center}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--muted);padding:7px 16px;border-radius:8px;font-size:13px;cursor:pointer;transition:.2s;font-family:var(--font);white-space:nowrap}
+.btn-ghost:hover{border-color:var(--border2);color:var(--text)}
+.btn-blue{background:var(--blue);border:none;color:#fff;padding:8px 18px;border-radius:8px;font-size:13px;cursor:pointer;transition:.2s;font-family:var(--font);font-weight:600}
+.btn-blue:hover{background:var(--blue-light);transform:translateY(-1px)}
+.nav-user{display:none;align-items:center;gap:8px}
+.nav-av{width:32px;height:32px;border-radius:50%;background:var(--blue-dim);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--blue-light);cursor:pointer;border:2px solid transparent;transition:.2s;overflow:hidden;flex-shrink:0}
+.nav-av:hover{border-color:var(--blue)}
+.nav-av img{width:100%;height:100%;object-fit:cover}
+.hamburger{display:none;background:transparent;border:1px solid var(--border);color:var(--muted);width:36px;height:36px;border-radius:8px;cursor:pointer;font-size:16px;align-items:center;justify-content:center;flex-shrink:0}
+.mobile-menu{display:none;position:fixed;top:var(--nav-h);left:0;right:0;background:var(--dark);border-bottom:1px solid var(--border);padding:16px;z-index:99;flex-direction:column;gap:8px}
+.mobile-menu.open{display:flex}
+.mobile-menu .btn-ghost,.mobile-menu .btn-blue{width:100%;text-align:center}
 
-  /* HERO */
-  .hero{padding:64px 32px 48px;text-align:center}
-  .hero-tag{display:inline-flex;align-items:center;gap:6px;background:var(--blue-dim);color:var(--blue-light);font-size:12px;padding:5px 16px;border-radius:20px;margin-bottom:22px;font-weight:500}
-  .hero h1{font-size:38px;font-weight:700;color:#fff;margin-bottom:14px;line-height:1.25}
-  .hero h1 span{color:var(--blue-light)}
-  .hero p{font-size:16px;color:var(--muted);margin-bottom:32px}
-  .search-row{display:flex;gap:8px;max-width:520px;margin:0 auto 40px}
-  .search-row input{flex:1;background:#1a1a26;border:1px solid var(--border);color:#fff;border-radius:8px;padding:12px 18px;font-size:14px}
-  .search-row input::placeholder{color:#555566}
-  .search-row input:focus{outline:none;border-color:var(--blue)}
-  .search-row button{background:var(--blue);border:none;color:#fff;padding:12px 24px;border-radius:8px;font-size:14px;cursor:pointer}
-  .stats-row{display:flex;justify-content:center;gap:40px;padding-bottom:48px;flex-wrap:wrap}
-  .stat-item{text-align:center}
-  .stat-num{font-size:24px;font-weight:700;color:#fff}
-  .stat-label{font-size:12px;color:var(--muted);margin-top:3px}
+/* ─── HERO ─────────────────────────────────────────────────── */
+.hero{padding:72px 24px 48px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:600px;height:400px;background:radial-gradient(ellipse,rgba(59,111,255,0.12) 0%,transparent 70%);pointer-events:none}
+.hero-tag{display:inline-flex;align-items:center;gap:6px;background:var(--blue-dim);color:var(--blue-light);font-size:12px;padding:5px 14px;border-radius:20px;margin-bottom:24px;font-weight:600;border:1px solid rgba(59,111,255,0.2)}
+.hero h1{font-size:clamp(28px,5vw,52px);font-weight:800;color:#fff;margin-bottom:16px;line-height:1.15;letter-spacing:-.03em}
+.hero h1 span{background:linear-gradient(135deg,var(--blue-light),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{font-size:16px;color:var(--muted);margin-bottom:36px;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.7}
+.search-row{display:flex;gap:8px;max-width:540px;margin:0 auto 48px;background:var(--card);border:1px solid var(--border2);border-radius:12px;padding:6px;box-shadow:0 0 0 4px var(--blue-glow)}
+.search-row input{flex:1;background:transparent;border:none;color:#fff;padding:10px 14px;font-size:14px;font-family:var(--font);min-width:0}
+.search-row input:focus{outline:none}
+.search-row input::placeholder{color:var(--muted)}
+.search-row button{background:var(--blue);border:none;color:#fff;padding:10px 22px;border-radius:8px;font-size:14px;cursor:pointer;font-family:var(--font);font-weight:600;white-space:nowrap;transition:.2s}
+.search-row button:hover{background:var(--blue-light)}
+.stats-row{display:flex;justify-content:center;gap:clamp(20px,4vw,56px);flex-wrap:wrap;padding-bottom:48px}
+.stat-item{text-align:center}
+.stat-num{font-size:26px;font-weight:800;color:#fff;letter-spacing:-.02em}
+.stat-label{font-size:12px;color:var(--muted);margin-top:4px;font-weight:500}
 
-  /* SECTIONS */
-  .divider{height:1px;background:var(--border);margin:0 32px}
-  .section{padding:32px 32px 0}
-  .sec-title{font-size:18px;font-weight:600;color:#fff;margin-bottom:4px}
-  .sec-sub{font-size:13px;color:var(--muted);margin-bottom:18px}
+/* ─── SHARED LAYOUT ─────────────────────────────────────────── */
+.divider{height:1px;background:var(--border);margin:0 24px}
+.section{padding:32px 24px 0}
+.sec-title{font-size:17px;font-weight:700;color:#fff;margin-bottom:4px;letter-spacing:-.02em}
+.sec-sub{font-size:13px;color:var(--muted);margin-bottom:18px}
 
-  /* CATEGORIES */
-  .cats{display:flex;gap:8px;flex-wrap:wrap;padding:0 32px 24px}
-  .cat{padding:8px 18px;border-radius:20px;font-size:13px;border:1px solid var(--border);cursor:pointer;color:var(--muted);background:transparent;transition:.2s}
-  .cat:hover{border-color:var(--blue-light);color:#fff}
-  .cat.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+/* ─── CATEGORIES ─────────────────────────────────────────────── */
+.cats{display:flex;gap:8px;flex-wrap:wrap;padding:0 24px 24px}
+.cat{padding:7px 16px;border-radius:20px;font-size:13px;border:1px solid var(--border);cursor:pointer;color:var(--muted);background:transparent;transition:.2s;font-family:var(--font);font-weight:500}
+.cat:hover{border-color:var(--border2);color:var(--text)}
+.cat.active{background:var(--blue);color:#fff;border-color:var(--blue);box-shadow:0 0 12px rgba(59,111,255,.3)}
 
-  /* JOB CARDS */
-  .jobs{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;padding:0 32px 32px}
-  .job-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;cursor:pointer;transition:.2s}
-  .job-card:hover{border-color:var(--blue-dim);transform:translateY(-2px)}
-  .job-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
-  .job-title{font-size:14px;font-weight:600;color:#fff}
-  .job-budget{font-size:13px;color:var(--blue-light);font-weight:600}
-  .job-desc{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:14px}
-  .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
-  .tag{font-size:11px;padding:3px 10px;background:var(--tag);border-radius:4px;color:var(--muted);border:1px solid var(--border)}
-  .job-footer{display:flex;align-items:center;justify-content:space-between}
-  .poster{display:flex;align-items:center;gap:8px}
-  .av{width:28px;height:28px;border-radius:50%;background:var(--blue-dim);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:var(--blue-light)}
-  .poster-name{font-size:12px;color:var(--muted)}
-  .apply-btn{font-size:12px;padding:6px 14px;background:var(--blue);color:#fff;border:none;border-radius:6px;cursor:pointer}
-  .apply-btn:hover{background:var(--blue-light)}
+/* ─── JOB CARDS ─────────────────────────────────────────────── */
+.jobs{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px;padding:0 24px 32px}
+.job-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;cursor:pointer;transition:.25s;position:relative;overflow:hidden}
+.job-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--blue-glow),transparent);opacity:0;transition:.25s;pointer-events:none}
+.job-card:hover{border-color:rgba(59,111,255,.3);transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.4)}
+.job-card:hover::before{opacity:1}
+.job-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;gap:10px}
+.job-title{font-size:14px;font-weight:700;color:#fff;line-height:1.4}
+.job-budget{font-size:13px;color:var(--green);font-weight:700;white-space:nowrap;background:#0d2a1a;padding:3px 10px;border-radius:6px;border:1px solid rgba(62,207,110,.2)}
+.job-desc{font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:14px}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.tag{font-size:11px;padding:3px 9px;background:var(--tag);border-radius:5px;color:var(--muted);border:1px solid var(--border);font-family:var(--mono)}
+.job-footer{display:flex;align-items:center;justify-content:space-between}
+.poster{display:flex;align-items:center;gap:8px}
+.av{width:28px;height:28px;border-radius:50%;background:var(--blue-dim);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--blue-light);overflow:hidden;flex-shrink:0}
+.av img{width:100%;height:100%;object-fit:cover}
+.poster-name{font-size:12px;color:var(--muted)}
+.apply-btn{font-size:12px;padding:6px 14px;background:var(--blue);color:#fff;border:none;border-radius:7px;cursor:pointer;font-family:var(--font);font-weight:600;transition:.2s}
+.apply-btn:hover{background:var(--blue-light)}
+.job-status-badge{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:600;margin-left:auto}
+.job-status-badge.open{background:#0d2a1a;color:var(--green);border:1px solid rgba(62,207,110,.2)}
+.job-status-badge.closed{background:#2a1010;color:var(--red);border:1px solid rgba(255,68,102,.2)}
+.job-status-badge.hired{background:#1a1a2e;color:var(--blue-light);border:1px solid rgba(107,143,255,.2)}
 
-  /* FREELANCER CARDS */
-  .fl-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;padding:0 32px 32px}
-  .fl-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center;transition:.2s}
-  .fl-card:hover{border-color:var(--blue-dim)}
-  .fl-av{width:56px;height:56px;border-radius:50%;background:var(--blue-dim);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600;color:var(--blue-light);margin:0 auto 10px}
-  .new-pill{display:inline-block;background:#1a2a1a;color:#4CAF50;font-size:10px;padding:2px 10px;border-radius:10px;margin-bottom:6px;border:1px solid #2a4a2a}
-  .fl-name{font-size:14px;font-weight:600;color:#fff;margin-bottom:2px}
-  .fl-role{font-size:12px;color:var(--muted);margin-bottom:6px}
-  .fl-rate{font-size:13px;color:var(--blue-light);font-weight:600;margin-bottom:8px}
-  .fl-stars{font-size:12px;color:#EF9F27;margin-bottom:12px}
-  .msg-btn{width:100%;font-size:12px;padding:8px;background:transparent;border:1px solid var(--border);border-radius:8px;cursor:pointer;color:var(--muted);transition:.2s}
-  .msg-btn:hover{border-color:var(--blue-light);color:#fff}
+/* ─── FREELANCER CARDS ─────────────────────────────────────── */
+.fl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;padding:0 24px 32px}
+.fl-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px;text-align:center;transition:.25s;cursor:pointer}
+.fl-card:hover{border-color:rgba(59,111,255,.3);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.fl-av{width:60px;height:60px;border-radius:50%;background:var(--blue-dim);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:var(--blue-light);margin:0 auto 10px;overflow:hidden;border:2px solid var(--border2)}
+.fl-av img{width:100%;height:100%;object-fit:cover}
+.new-pill{display:inline-block;background:#0d1f0d;color:var(--green);font-size:10px;padding:2px 10px;border-radius:10px;margin-bottom:6px;border:1px solid rgba(62,207,110,.2);font-weight:600}
+.fl-name{font-size:14px;font-weight:700;color:#fff;margin-bottom:3px}
+.fl-role{font-size:12px;color:var(--muted);margin-bottom:6px}
+.fl-rate{font-size:13px;color:var(--blue-light);font-weight:700;margin-bottom:8px}
+.fl-stars{font-size:12px;color:var(--yellow);margin-bottom:12px;letter-spacing:1px}
+.msg-btn{width:100%;font-size:12px;padding:8px;background:transparent;border:1px solid var(--border);border-radius:8px;cursor:pointer;color:var(--muted);transition:.2s;font-family:var(--font)}
+.msg-btn:hover{border-color:var(--blue-light);color:#fff}
 
-  /* WHY */
-  .why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;padding:0 32px 32px}
-  .why-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px}
-  .why-icon{font-size:24px;color:var(--blue-light);margin-bottom:10px}
-  .why-title{font-size:13px;font-weight:600;color:#fff;margin-bottom:4px}
-  .why-desc{font-size:12px;color:var(--muted);line-height:1.5}
+/* ─── WHY SECTION ─────────────────────────────────────────── */
+.why-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;padding:0 24px 32px}
+.why-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px}
+.why-icon{font-size:22px;margin-bottom:10px}
+.why-title{font-size:13px;font-weight:700;color:#fff;margin-bottom:4px}
+.why-desc{font-size:12px;color:var(--muted);line-height:1.6}
+.cta{margin:0 24px 40px;background:linear-gradient(135deg,var(--blue-dim),#1a1030);border:1px solid rgba(59,111,255,.25);border-radius:16px;padding:32px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;position:relative;overflow:hidden}
+.cta::before{content:'';position:absolute;right:-60px;top:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(59,111,255,.2),transparent);pointer-events:none}
+.cta h3{font-size:18px;font-weight:800;color:#fff;margin-bottom:6px;letter-spacing:-.02em}
+.cta p{font-size:13px;color:var(--blue-light)}
 
-  /* CTA */
-  .cta{margin:0 32px 40px;background:var(--blue-dim);border:1px solid var(--blue);border-radius:14px;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
-  .cta h3{font-size:17px;font-weight:600;color:#fff;margin-bottom:4px}
-  .cta p{font-size:13px;color:var(--blue-light)}
-  .cta-btn{background:var(--blue);border:none;color:#fff;padding:12px 24px;border-radius:8px;font-size:14px;cursor:pointer}
+/* ─── AUTH / LOGIN ─────────────────────────────────────────── */
+.login-page{display:flex;align-items:center;justify-content:center;padding:48px 24px;min-height:calc(100vh - var(--nav-h))}
+.login-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:40px 36px;width:100%;max-width:440px;box-shadow:0 24px 64px rgba(0,0,0,.4)}
+.login-card h2{font-size:24px;font-weight:800;color:#fff;text-align:center;margin-bottom:6px;letter-spacing:-.03em}
+.login-card .sub{font-size:14px;color:var(--muted);text-align:center;margin-bottom:28px}
+.auth-tabs{display:flex;background:var(--dark);border-radius:10px;padding:4px;margin-bottom:28px;border:1px solid var(--border)}
+.auth-tab{flex:1;padding:8px;border-radius:8px;font-size:13px;cursor:pointer;color:var(--muted);border:none;background:transparent;transition:.2s;font-family:var(--font);font-weight:600}
+.auth-tab.active{background:var(--blue);color:#fff}
+.pic-section{display:flex;flex-direction:column;align-items:center;margin-bottom:24px}
+.pic-circle{width:88px;height:88px;border-radius:50%;background:#12121e;border:2px dashed var(--blue-dim);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;transition:.2s}
+.pic-circle:hover{border-color:var(--blue)}
+.pic-circle img{width:100%;height:100%;object-fit:cover;display:none}
+.pic-hint{font-size:11px;color:var(--muted);margin-top:8px}
+.field{margin-bottom:18px}
+.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:7px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.field input,.field select,.field textarea{width:100%;background:#0d0d18;border:1px solid var(--border);color:#fff;border-radius:9px;padding:11px 14px;font-size:14px;transition:.2s;font-family:var(--font)}
+.field textarea{resize:vertical;min-height:80px}
+.field select option{background:var(--dark)}
+.field input::placeholder,.field textarea::placeholder{color:#44445a}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-glow)}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.error{font-size:12px;color:var(--red);margin-top:5px;display:none}
+.gmail-row{display:flex;align-items:center;gap:10px;background:#0d0d18;border:1px solid var(--border);border-radius:9px;padding:12px 14px;margin-bottom:18px;cursor:pointer;transition:.2s}
+.gmail-row:hover{border-color:var(--blue-dim)}
+.gmail-text{font-size:14px;color:var(--text);flex:1}
+.gmail-badge{font-size:11px;color:var(--green);background:#0d1f0d;border:1px solid rgba(62,207,110,.2);padding:2px 8px;border-radius:10px;display:none;font-weight:600}
+.or-row{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.or-line{flex:1;height:1px;background:var(--border)}
+.or-text{font-size:12px;color:var(--muted)}
+.join-btn{width:100%;background:var(--blue);border:none;color:#fff;padding:13px;border-radius:9px;font-size:15px;font-weight:700;cursor:pointer;transition:.2s;font-family:var(--font)}
+.join-btn:hover{background:var(--blue-light);transform:translateY(-1px)}
+.join-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.terms{font-size:12px;color:var(--muted);text-align:center;margin-top:14px;line-height:1.6}
+.terms span{color:var(--blue-light);cursor:pointer}
+.success-view{display:none;flex-direction:column;align-items:center;text-align:center;padding:16px 0}
+.success-circle{width:72px;height:72px;border-radius:50%;background:var(--blue-dim);display:flex;align-items:center;justify-content:center;font-size:30px;margin-bottom:18px;box-shadow:0 0 32px rgba(59,111,255,.3)}
+.success-view h2{font-size:22px;font-weight:800;color:#fff;margin-bottom:8px}
+.success-view p{font-size:14px;color:var(--muted);margin-bottom:24px;line-height:1.6}
+.success-btn{background:var(--blue);border:none;color:#fff;padding:12px 32px;border-radius:9px;font-size:14px;cursor:pointer;font-family:var(--font);font-weight:700}
+.forgot-link{font-size:12px;color:var(--blue-light);cursor:pointer;text-align:right;margin-top:-12px;margin-bottom:16px}
 
-  /* LOGIN */
-  .login-page{display:flex;align-items:center;justify-content:center;padding:48px 24px;min-height:calc(100vh - 60px)}
-  .login-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:40px 36px;width:100%;max-width:420px}
-  .login-card h2{font-size:24px;font-weight:700;color:#fff;text-align:center;margin-bottom:6px}
-  .login-card .sub{font-size:14px;color:var(--muted);text-align:center;margin-bottom:32px}
-  .pic-section{display:flex;flex-direction:column;align-items:center;margin-bottom:28px}
-  .pic-circle{width:96px;height:96px;border-radius:50%;background:#1a1a26;border:2px dashed var(--blue-dim);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;transition:.2s}
-  .pic-circle:hover{border-color:var(--blue)}
-  .pic-circle img{width:100%;height:100%;object-fit:cover;display:none}
-  .pic-hint{font-size:12px;color:var(--muted);margin-top:8px}
-  .field{margin-bottom:20px}
-  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:8px}
-  .field input,.field select,.field textarea{width:100%;background:#1a1a26;border:1px solid var(--border);color:#fff;border-radius:8px;padding:12px 16px;font-size:14px;transition:.2s;font-family:inherit}
-  .field textarea{resize:vertical;min-height:80px}
-  .field select option{background:var(--dark)}
-  .field input::placeholder,.field textarea::placeholder{color:#555566}
-  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--blue)}
-  .error{font-size:12px;color:var(--red);margin-top:5px;display:none}
-  .gmail-row{display:flex;align-items:center;gap:10px;background:#1a1a26;border:1px solid var(--border);border-radius:8px;padding:12px 16px;margin-bottom:20px;cursor:pointer;transition:.2s}
-  .gmail-row:hover{border-color:var(--blue-dim)}
-  .gmail-text{font-size:14px;color:var(--text);flex:1}
-  .gmail-badge{font-size:11px;color:#4CAF50;background:#1a2a1a;border:1px solid #2a4a2a;padding:2px 8px;border-radius:10px;display:none}
-  .or-row{display:flex;align-items:center;gap:10px;margin-bottom:20px}
-  .or-line{flex:1;height:1px;background:var(--border)}
-  .or-text{font-size:12px;color:var(--muted)}
-  .join-btn{width:100%;background:var(--blue);border:none;color:#fff;padding:13px;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;transition:.2s}
-  .join-btn:hover{background:var(--blue-light)}
-  .join-btn:disabled{opacity:.5;cursor:not-allowed}
-  .terms{font-size:12px;color:var(--muted);text-align:center;margin-top:16px;line-height:1.6}
-  .terms span{color:var(--blue-light);cursor:pointer}
-  .success-view{display:none;flex-direction:column;align-items:center;text-align:center;padding:20px 0}
-  .success-circle{width:76px;height:76px;border-radius:50%;background:var(--blue-dim);display:flex;align-items:center;justify-content:center;font-size:34px;color:var(--blue-light);margin-bottom:20px}
-  .success-view h2{font-size:22px;font-weight:700;color:#fff;margin-bottom:8px}
-  .success-view p{font-size:14px;color:var(--muted);margin-bottom:24px}
-  .success-btn{background:var(--blue);border:none;color:#fff;padding:12px 32px;border-radius:8px;font-size:14px;cursor:pointer}
+/* ─── DASHBOARD ─────────────────────────────────────────────── */
+.dash{padding:28px 24px}
+.dash-header{display:flex;align-items:center;gap:16px;margin-bottom:24px;flex-wrap:wrap}
+.dash-av-wrap{position:relative}
+.dash-av{width:64px;height:64px;border-radius:50%;object-fit:cover;border:3px solid var(--blue);display:block}
+.dash-av-txt{width:64px;height:64px;border-radius:50%;background:var(--blue-dim);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;color:var(--blue-light);border:3px solid var(--blue)}
+.dash-av-edit{position:absolute;bottom:0;right:0;width:22px;height:22px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:11px;border:2px solid var(--black)}
+.dash-info h2{font-size:20px;font-weight:800;color:#fff;letter-spacing:-.02em}
+.dash-info p{font-size:13px;color:var(--muted)}
+.dash-role-badge{display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:3px 10px;border-radius:8px;margin-top:6px;font-weight:600;background:var(--blue-dim);color:var(--blue-light)}
+.dash-tabs{display:flex;gap:4px;margin-bottom:24px;background:var(--card);border-radius:10px;padding:4px;border:1px solid var(--border);overflow-x:auto;-webkit-overflow-scrolling:touch}
+.dash-tab{padding:8px 18px;border-radius:8px;font-size:13px;cursor:pointer;color:var(--muted);border:none;background:transparent;transition:.2s;font-family:var(--font);font-weight:600;white-space:nowrap;flex-shrink:0}
+.dash-tab.active{background:var(--blue);color:#fff}
+.dash-panel{display:none}.dash-panel.active{display:block}
+.dash-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:24px}
+.dash-stat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px}
+.dash-stat-num{font-size:26px;font-weight:800;color:#fff;letter-spacing:-.02em}
+.dash-stat-label{font-size:12px;color:var(--muted);margin-top:4px;font-weight:500}
+.dash-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px}
+.post-job-btn{background:var(--blue);border:none;color:#fff;padding:10px 20px;border-radius:9px;font-size:13px;cursor:pointer;font-family:var(--font);font-weight:700;transition:.2s}
+.post-job-btn:hover{background:var(--blue-light)}
+.logout-btn{background:transparent;border:1px solid rgba(255,68,102,.3);color:var(--red);padding:10px 18px;border-radius:9px;font-size:13px;cursor:pointer;font-family:var(--font);font-weight:600;transition:.2s}
+.logout-btn:hover{background:rgba(255,68,102,.1)}
 
-  /* DASHBOARD */
-  .dash{padding:32px}
-  .dash-header{display:flex;align-items:center;gap:16px;margin-bottom:28px}
-  .dash-av{width:64px;height:64px;border-radius:50%;object-fit:cover;border:3px solid var(--blue)}
-  .dash-av-txt{width:64px;height:64px;border-radius:50%;background:var(--blue-dim);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:var(--blue-light);border:3px solid var(--blue)}
-  .dash-info h2{font-size:20px;font-weight:700;color:#fff}
-  .dash-info p{font-size:13px;color:var(--muted)}
-  .dash-tabs{display:flex;gap:4px;margin-bottom:24px;background:var(--card);border-radius:10px;padding:4px;border:1px solid var(--border);width:fit-content}
-  .dash-tab{padding:8px 20px;border-radius:8px;font-size:13px;cursor:pointer;color:var(--muted);border:none;background:transparent;transition:.2s}
-  .dash-tab.active{background:var(--blue);color:#fff}
-  .dash-panel{display:none}.dash-panel.active{display:block}
-  .dash-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:24px}
-  .dash-stat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px}
-  .dash-stat-num{font-size:24px;font-weight:700;color:#fff}
-  .dash-stat-label{font-size:12px;color:var(--muted);margin-top:4px}
+/* ─── MY JOBS MANAGEMENT ─────────────────────────────────────── */
+.job-manage-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:12px}
+.job-manage-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;gap:10px}
+.job-manage-title{font-size:14px;font-weight:700;color:#fff}
+.job-manage-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.btn-sm{font-size:12px;padding:6px 12px;border-radius:7px;cursor:pointer;font-family:var(--font);font-weight:600;transition:.2s;border:1px solid var(--border);background:transparent;color:var(--muted)}
+.btn-sm:hover{border-color:var(--border2);color:var(--text)}
+.btn-sm.danger{border-color:rgba(255,68,102,.3);color:var(--red)}
+.btn-sm.danger:hover{background:rgba(255,68,102,.1)}
+.btn-sm.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn-sm.primary:hover{background:var(--blue-light)}
+.applicants-list{margin-top:14px;display:none;border-top:1px solid var(--border);padding-top:14px}
+.applicants-list.open{display:block}
+.applicant-row{display:flex;align-items:center;gap:10px;padding:10px;background:var(--dark);border-radius:9px;margin-bottom:8px}
+.applicant-info{flex:1;min-width:0}
+.applicant-name{font-size:13px;font-weight:600;color:#fff}
+.applicant-skill{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.applicant-actions{display:flex;gap:6px;flex-shrink:0}
 
-  /* POST JOB */
-  .post-job-btn{background:var(--blue);border:none;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;cursor:pointer;margin-bottom:20px}
+/* ─── FREELANCER BROWSE ─────────────────────────────────────── */
+.browse-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:24px;border-bottom:1px solid var(--border)}
+.browse-filters{display:flex;gap:8px;flex-wrap:wrap;padding:16px 24px;border-bottom:1px solid var(--border)}
+.filter-select{background:var(--card);border:1px solid var(--border);color:var(--text);padding:7px 12px;border-radius:8px;font-size:13px;font-family:var(--font);cursor:pointer}
+.filter-select:focus{outline:none;border-color:var(--blue)}
+.fl-browse-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;padding:24px}
 
-  /* CHAT */
-  .chat-layout{display:grid;grid-template-columns:280px 1fr;height:calc(100vh - 61px)}
-  .chat-sidebar{background:var(--card);border-right:1px solid var(--border);overflow-y:auto}
-  .chat-sidebar-header{padding:16px;border-bottom:1px solid var(--border);font-size:14px;font-weight:600;color:#fff}
-  .chat-contact{display:flex;align-items:center;gap:10px;padding:14px 16px;cursor:pointer;border-bottom:1px solid var(--border);transition:.2s}
-  .chat-contact:hover,.chat-contact.active{background:var(--blue-dim)}
-  .chat-contact-av{width:38px;height:38px;border-radius:50%;background:var(--blue-dim);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:var(--blue-light);flex-shrink:0}
-  .chat-contact-info{flex:1;min-width:0}
-  .chat-contact-name{font-size:13px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .chat-contact-preview{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .chat-unread{background:var(--blue);color:#fff;font-size:10px;padding:2px 6px;border-radius:10px;flex-shrink:0}
-  .chat-main{display:flex;flex-direction:column}
-  .chat-topbar{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
-  .chat-topbar-name{font-size:14px;font-weight:600;color:#fff}
-  .chat-topbar-status{font-size:12px;color:var(--green)}
-  .chat-messages{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:12px}
-  .chat-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:var(--muted);text-align:center;gap:8px}
-  .chat-empty-icon{font-size:48px}
-  .msg-bubble{max-width:65%;padding:10px 14px;border-radius:12px;font-size:13px;line-height:1.5}
-  .msg-bubble.sent{background:var(--blue);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
-  .msg-bubble.recv{background:var(--card);border:1px solid var(--border);color:var(--text);align-self:flex-start;border-bottom-left-radius:4px}
-  .msg-time{font-size:10px;opacity:.6;margin-top:4px;text-align:right}
-  .chat-input-row{padding:16px 20px;border-top:1px solid var(--border);display:flex;gap:10px}
-  .chat-input{flex:1;background:#1a1a26;border:1px solid var(--border);color:#fff;border-radius:8px;padding:10px 16px;font-size:14px;font-family:inherit}
-  .chat-input:focus{outline:none;border-color:var(--blue)}
-  .chat-send-btn{background:var(--blue);border:none;color:#fff;padding:10px 20px;border-radius:8px;cursor:pointer;font-size:13px}
-  .chat-no-select{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:var(--muted);gap:8px}
+/* ─── PUBLIC PROFILE PAGE ─────────────────────────────────────── */
+.profile-page{padding:32px 24px;max-width:860px;margin:0 auto}
+.profile-hero{display:flex;align-items:flex-start;gap:24px;margin-bottom:32px;flex-wrap:wrap}
+.profile-av-lg{width:100px;height:100px;border-radius:50%;background:var(--blue-dim);display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:800;color:var(--blue-light);border:3px solid var(--blue);overflow:hidden;flex-shrink:0}
+.profile-av-lg img{width:100%;height:100%;object-fit:cover}
+.profile-info h1{font-size:24px;font-weight:800;color:#fff;letter-spacing:-.03em;margin-bottom:4px}
+.profile-info .role{font-size:14px;color:var(--muted);margin-bottom:8px}
+.profile-info .rate{font-size:15px;color:var(--blue-light);font-weight:700;margin-bottom:12px}
+.profile-info .bio{font-size:14px;color:var(--muted);line-height:1.7;max-width:500px}
+.profile-actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.profile-section{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px;margin-bottom:16px}
+.profile-section h3{font-size:15px;font-weight:700;color:#fff;margin-bottom:16px}
+.skill-chips{display:flex;flex-wrap:wrap;gap:8px}
+.skill-chip{padding:5px 14px;background:var(--tag);border:1px solid var(--border);border-radius:20px;font-size:12px;color:var(--muted);font-family:var(--mono)}
+.review-item{padding:14px 0;border-bottom:1px solid var(--border)}
+.review-item:last-child{border-bottom:none}
+.review-item .stars{color:var(--yellow);font-size:12px;margin-bottom:4px}
+.review-item .text{font-size:13px;color:var(--muted);line-height:1.6}
+.review-item .reviewer{font-size:12px;color:var(--blue-light);margin-top:6px}
+.portfolio-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+.portfolio-item{background:var(--dark);border:1px solid var(--border);border-radius:10px;padding:14px;font-size:12px;color:var(--muted);text-align:center}
+.portfolio-item .icon{font-size:24px;margin-bottom:6px}
 
-  /* MODAL */
-  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;align-items:center;justify-content:center}
-  .modal-overlay.open{display:flex}
-  .modal{background:var(--dark);border:1px solid var(--border);border-radius:16px;padding:32px;width:100%;max-width:480px;max-height:90vh;overflow-y:auto}
-  .modal h3{font-size:18px;font-weight:700;color:#fff;margin-bottom:20px}
-  .modal-close{float:right;background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;margin-top:-4px}
+/* ─── JOB DETAIL ─────────────────────────────────────────────── */
+.job-detail{padding:24px;max-width:760px;margin:0 auto}
+.job-detail-header{margin-bottom:24px}
+.job-detail-header h1{font-size:22px;font-weight:800;color:#fff;margin-bottom:8px;letter-spacing:-.03em}
+.job-detail-meta{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.meta-badge{display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:4px 12px;border-radius:8px;background:var(--card);border:1px solid var(--border);font-weight:600}
+.job-detail-desc{font-size:14px;color:var(--muted);line-height:1.75;margin-bottom:24px}
+.job-detail-section{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:16px}
+.job-detail-section h3{font-size:14px;font-weight:700;color:#fff;margin-bottom:12px}
+.apply-form textarea{width:100%;background:#0d0d18;border:1px solid var(--border);color:#fff;border-radius:9px;padding:12px;font-size:14px;font-family:var(--font);min-height:120px;resize:vertical;margin-bottom:12px}
+.apply-form textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-glow)}
 
-  /* TOAST */
-  .toast{position:fixed;bottom:24px;right:24px;background:var(--card);border:1px solid var(--blue);border-radius:10px;padding:12px 20px;font-size:13px;color:#fff;z-index:999;display:none;animation:slideIn .3s ease}
-  @keyframes slideIn{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+/* ─── CHAT ─────────────────────────────────────────────────── */
+.chat-layout{display:grid;grid-template-columns:280px 1fr;height:calc(100vh - var(--nav-h))}
+.chat-sidebar{background:var(--card);border-right:1px solid var(--border);overflow-y:auto;display:flex;flex-direction:column}
+.chat-sidebar-header{padding:16px;border-bottom:1px solid var(--border);font-size:14px;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:space-between}
+.chat-search{padding:10px 12px;border-bottom:1px solid var(--border)}
+.chat-search input{width:100%;background:#0d0d18;border:1px solid var(--border);color:#fff;border-radius:8px;padding:8px 12px;font-size:13px;font-family:var(--font)}
+.chat-search input:focus{outline:none;border-color:var(--blue)}
+.chat-contact{display:flex;align-items:center;gap:10px;padding:13px 14px;cursor:pointer;border-bottom:1px solid var(--border);transition:.2s}
+.chat-contact:hover,.chat-contact.active{background:var(--blue-dim)}
+.chat-contact-av{width:38px;height:38px;border-radius:50%;background:var(--blue-dim);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--blue-light);flex-shrink:0;overflow:hidden}
+.chat-contact-av img{width:100%;height:100%;object-fit:cover}
+.chat-contact-info{flex:1;min-width:0}
+.chat-contact-name{font-size:13px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chat-contact-preview{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chat-unread{background:var(--blue);color:#fff;font-size:10px;padding:2px 6px;border-radius:10px;flex-shrink:0;font-weight:700}
+.chat-main{display:flex;flex-direction:column;background:var(--black)}
+.chat-topbar{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;background:var(--card)}
+.chat-topbar-name{font-size:14px;font-weight:700;color:#fff}
+.chat-topbar-status{font-size:12px;color:var(--green)}
+.chat-messages{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:12px}
+.chat-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:var(--muted);text-align:center;gap:8px}
+.chat-empty-icon{font-size:48px}
+.msg-bubble{max-width:65%;padding:10px 14px;border-radius:14px;font-size:13px;line-height:1.6;position:relative}
+.msg-bubble.sent{background:var(--blue);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.msg-bubble.recv{background:var(--card);border:1px solid var(--border);color:var(--text);align-self:flex-start;border-bottom-left-radius:4px}
+.msg-time{font-size:10px;opacity:.6;margin-top:4px;text-align:right}
+.msg-read{font-size:10px;opacity:.7;margin-top:2px;text-align:right}
+.typing-indicator{align-self:flex-start;background:var(--card);border:1px solid var(--border);padding:10px 14px;border-radius:14px;border-bottom-left-radius:4px;display:none}
+.typing-dots{display:flex;gap:4px;align-items:center}
+.typing-dot{width:6px;height:6px;border-radius:50%;background:var(--muted);animation:typingBounce 1.2s infinite}
+.typing-dot:nth-child(2){animation-delay:.2s}
+.typing-dot:nth-child(3){animation-delay:.4s}
+@keyframes typingBounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
+.chat-input-row{padding:14px 18px;border-top:1px solid var(--border);display:flex;gap:10px;align-items:flex-end;background:var(--card)}
+.chat-input{flex:1;background:#0d0d18;border:1px solid var(--border);color:#fff;border-radius:9px;padding:10px 14px;font-size:14px;font-family:var(--font);resize:none;max-height:120px;min-height:40px}
+.chat-input:focus{outline:none;border-color:var(--blue)}
+.chat-file-btn{background:transparent;border:1px solid var(--border);color:var(--muted);width:38px;height:38px;border-radius:8px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:.2s;flex-shrink:0}
+.chat-file-btn:hover{border-color:var(--border2);color:var(--text)}
+.chat-send-btn{background:var(--blue);border:none;color:#fff;width:38px;height:38px;border-radius:9px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:.2s;flex-shrink:0}
+.chat-send-btn:hover{background:var(--blue-light)}
+.chat-no-select{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:var(--muted);gap:10px}
+.chat-img-msg{max-width:200px;border-radius:10px;cursor:pointer;margin-top:6px}
+/* Mobile chat */
+.chat-back-btn{display:none;background:transparent;border:none;color:var(--muted);cursor:pointer;font-size:18px;padding:0 8px 0 0}
 
-  /* LOADING */
-  .loading{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle;margin-right:6px}
-  @keyframes spin{to{transform:rotate(360deg)}}
+/* ─── NOTIFICATIONS ─────────────────────────────────────────── */
+.notif-bell{position:relative;cursor:pointer;background:transparent;border:1px solid var(--border);border-radius:8px;padding:7px 10px;font-size:15px;color:var(--text);transition:.2s}
+.notif-bell:hover{border-color:var(--border2)}
+.notif-badge{position:absolute;top:-6px;right:-6px;background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:2px 5px;border-radius:10px;display:none;min-width:18px;text-align:center}
+.notif-dropdown{position:absolute;top:calc(var(--nav-h) + 4px);right:16px;width:320px;background:var(--dark);border:1px solid var(--border);border-radius:14px;z-index:200;display:none;box-shadow:0 16px 48px rgba(0,0,0,.5);overflow:hidden}
+.notif-dropdown.open{display:block;animation:fadeDown .15s ease}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.notif-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--border)}
+.notif-header span{font-size:14px;font-weight:700;color:#fff}
+.notif-clear{font-size:12px;color:var(--blue-light);cursor:pointer;background:none;border:none;font-family:var(--font)}
+.notif-list{max-height:360px;overflow-y:auto}
+.notif-item{display:flex;align-items:flex-start;gap:10px;padding:12px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:.2s}
+.notif-item:hover{background:var(--card)}
+.notif-item.unread{background:#111128}
+.notif-icon{width:36px;height:36px;border-radius:50%;background:var(--blue-dim);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.notif-content{flex:1}
+.notif-text{font-size:13px;color:var(--text);line-height:1.4;margin-bottom:3px}
+.notif-time{font-size:11px;color:var(--muted)}
+.notif-empty{padding:32px;text-align:center;color:var(--muted);font-size:13px}
+.notif-dot{width:8px;height:8px;border-radius:50%;background:var(--blue);flex-shrink:0;margin-top:4px}
 
+/* ─── MODAL ─────────────────────────────────────────────────── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(4px)}
+.modal-overlay.open{display:flex;animation:fadeIn .15s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal{background:var(--dark);border:1px solid var(--border);border-radius:18px;padding:28px;width:100%;max-width:500px;max-height:90vh;overflow-y:auto;animation:scaleIn .15s ease}
+@keyframes scaleIn{from{transform:scale(.96)}to{transform:scale(1)}}
+.modal h3{font-size:18px;font-weight:800;color:#fff;margin-bottom:20px;letter-spacing:-.02em}
+.modal-close{float:right;background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer;line-height:1;margin-top:-2px;transition:.2s}
+.modal-close:hover{color:var(--text)}
 
-  /* NOTIFICATIONS */
-  .notif-bell{position:relative;cursor:pointer;background:transparent;border:1px solid var(--border);border-radius:8px;padding:7px 12px;font-size:16px;color:var(--text);transition:.2s}
-  .notif-bell:hover{border-color:var(--blue-light)}
-  .notif-badge{position:absolute;top:-6px;right:-6px;background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:2px 5px;border-radius:10px;display:none;min-width:18px;text-align:center}
-  .notif-dropdown{position:absolute;top:52px;right:80px;width:320px;background:var(--dark);border:1px solid var(--border);border-radius:14px;z-index:200;display:none;box-shadow:0 8px 32px rgba(0,0,0,.4);overflow:hidden}
-  .notif-dropdown.open{display:block}
-  .notif-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--border)}
-  .notif-header span{font-size:14px;font-weight:600;color:#fff}
-  .notif-clear{font-size:12px;color:var(--blue-light);cursor:pointer;background:none;border:none}
-  .notif-list{max-height:360px;overflow-y:auto}
-  .notif-item{display:flex;align-items:flex-start;gap:10px;padding:12px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:.2s}
-  .notif-item:hover{background:var(--card)}
-  .notif-item.unread{background:#1a1a2e}
-  .notif-icon{width:36px;height:36px;border-radius:50%;background:var(--blue-dim);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
-  .notif-content{flex:1}
-  .notif-text{font-size:13px;color:var(--text);line-height:1.4;margin-bottom:3px}
-  .notif-time{font-size:11px;color:var(--muted)}
-  .notif-empty{padding:32px;text-align:center;color:var(--muted);font-size:13px}
-  .notif-dot{width:8px;height:8px;border-radius:50%;background:var(--blue);flex-shrink:0;margin-top:4px}
-  footer{text-align:center;padding:24px;border-top:1px solid var(--border);font-size:13px;color:var(--muted)}
+/* ─── REVIEWS ─────────────────────────────────────────────────── */
+.star-rating{display:flex;gap:6px;margin-bottom:16px}
+.star-btn{background:none;border:none;font-size:28px;cursor:pointer;transition:.2s;color:#2a2a3a;padding:0}
+.star-btn.lit,.star-btn:hover{color:var(--yellow)}
+
+/* ─── TOAST ─────────────────────────────────────────────────── */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--card);border:1px solid var(--border2);border-radius:12px;padding:12px 18px;font-size:13px;color:#fff;z-index:999;display:none;box-shadow:0 8px 24px rgba(0,0,0,.4);max-width:300px;line-height:1.5}
+.toast.show{display:block;animation:slideIn .3s ease}
+@keyframes slideIn{from{transform:translateY(16px);opacity:0}to{transform:translateY(0);opacity:1}}
+
+/* ─── LOADING ─────────────────────────────────────────────────── */
+.loading{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle;margin-right:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.skeleton{background:linear-gradient(90deg,var(--card) 25%,var(--card2) 50%,var(--card) 75%);background-size:200% 100%;animation:shimmer 1.2s infinite;border-radius:8px;height:160px}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* ─── REPORT MODAL ─────────────────────────────────────────────── */
+.report-reasons{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
+.report-reason{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#0d0d18;border:1px solid var(--border);border-radius:9px;cursor:pointer;transition:.2s}
+.report-reason:hover{border-color:var(--border2)}
+.report-reason input[type=radio]{accent-color:var(--blue)}
+.report-reason label{font-size:13px;color:var(--text);cursor:pointer}
+
+/* ─── VERIFIED BADGE ─────────────────────────────────────────── */
+.verified{display:inline-flex;align-items:center;gap:3px;font-size:11px;color:var(--blue-light);background:var(--blue-dim);padding:2px 7px;border-radius:5px;margin-left:6px;font-weight:600;vertical-align:middle}
+
+/* ─── SEARCH RESULTS ─────────────────────────────────────────── */
+.search-page{padding:24px}
+.search-results-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px}
+.results-count{font-size:14px;color:var(--muted)}
+.results-count strong{color:var(--text)}
+.sort-row{display:flex;align-items:center;gap:8px}
+.sort-label{font-size:13px;color:var(--muted)}
+.no-results{text-align:center;padding:60px 24px;color:var(--muted)}
+.no-results-icon{font-size:48px;margin-bottom:12px}
+.no-results h3{font-size:17px;color:var(--text);margin-bottom:8px}
+
+/* ─── FOOTER ─────────────────────────────────────────────────── */
+footer{text-align:center;padding:24px;border-top:1px solid var(--border);font-size:13px;color:var(--muted)}
+
+/* ─── RESPONSIVE ─────────────────────────────────────────────── */
+@media(max-width:768px){
+  .nav-btns .btn-ghost:not(.always-show),.nav-btns .btn-blue{display:none}
+  .hamburger{display:flex}
+  .chat-layout{grid-template-columns:1fr;position:relative}
+  .chat-sidebar{position:absolute;left:0;top:0;bottom:0;width:100%;z-index:10;transform:translateX(0)}
+  .chat-sidebar.hidden{transform:translateX(-100%)}
+  .chat-main{position:absolute;left:0;top:0;right:0;bottom:0;z-index:11;transform:translateX(100%)}
+  .chat-main.visible{transform:translateX(0)}
+  .chat-back-btn{display:block}
+  .fl-browse-grid{padding:16px;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+  .dash{padding:20px 16px}
+  .jobs{padding:0 16px 24px}
+  .fl-grid{padding:0 16px 24px}
+  .cats{padding:0 16px 16px}
+  .search-row{margin-bottom:32px}
+}
 </style>
 </head>
 <body>
 
-<!-- TOAST -->
+<!-- ── TOAST ── -->
 <div class="toast" id="toast"></div>
 
-<!-- POST JOB MODAL -->
+<!-- ── MOBILE MENU ── -->
+<div class="mobile-menu" id="mobileMenu">
+  <div id="mobileGuest">
+    <button class="btn-ghost" onclick="showPage('login');closeMobileMenu()" style="width:100%;margin-bottom:8px">Log in</button>
+    <button class="btn-blue" onclick="showPage('login');closeMobileMenu()" style="width:100%">Join free</button>
+  </div>
+  <div id="mobileUser" style="display:none;flex-direction:column;gap:8px">
+    <button class="btn-ghost" onclick="showPage('browse');closeMobileMenu()">Browse Talent</button>
+    <button class="btn-ghost" onclick="showPage('chat');closeMobileMenu()">💬 Messages</button>
+    <button class="btn-ghost" onclick="showPage('dashboard');closeMobileMenu()">Dashboard</button>
+    <button class="btn-ghost" onclick="doLogout();closeMobileMenu()" style="color:var(--red);border-color:rgba(255,68,102,.3)">Log out</button>
+  </div>
+</div>
+
+<!-- ── POST JOB MODAL ── -->
 <div class="modal-overlay" id="postJobModal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('postJobModal')">✕</button>
     <h3>Post a Job</h3>
     <div class="field"><label>Job Title</label><input type="text" id="jobTitle" placeholder="e.g. Logo design for startup"/></div>
-    <div class="field"><label>Budget</label><input type="text" id="jobBudget" placeholder="e.g. $20–$50"/></div>
+    <div class="field-row">
+      <div class="field"><label>Budget</label><input type="text" id="jobBudget" placeholder="e.g. $20–$50"/></div>
+      <div class="field"><label>Deadline</label><input type="date" id="jobDeadline"/></div>
+    </div>
     <div class="field"><label>Category</label>
       <select id="jobCategory">
         <option value="Design">🎨 Design</option>
@@ -243,50 +426,128 @@
         <option value="AI & Data">🤖 AI & Data</option>
       </select>
     </div>
-    <div class="field"><label>Description</label><textarea id="jobDesc" placeholder="Describe what you need..."></textarea></div>
-    <div class="field"><label>Skills needed (comma separated)</label><input type="text" id="jobSkills" placeholder="e.g. Figma, Illustrator, Branding"/></div>
+    <div class="field"><label>Description</label><textarea id="jobDesc" placeholder="Describe what you need in detail..."></textarea></div>
+    <div class="field"><label>Skills Needed (comma separated)</label><input type="text" id="jobSkills" placeholder="e.g. Figma, Illustrator, Branding"/></div>
     <button class="join-btn" id="postJobBtn" onclick="postJob()">Post Job</button>
   </div>
 </div>
 
-<!-- NAV -->
-<nav class="nav">
-  <div class="logo" onclick="showPage('home')"><div class="logo-dot"></div>Growth</div>
-  <div class="nav-btns">
-    <div class="nav-user" id="navUser">
-      <button class="btn-outline" onclick="showPage('chat')">💬 Messages</button>
-      <button class="btn-outline" onclick="showPage('dashboard')">Dashboard</button>
-      <button class="notif-bell" id="notifBell" onclick="toggleNotifDropdown()">
-        🔔<span class="notif-badge" id="notifBadge">0</span>
-      </button>
-      <div id="navAv" class="nav-av-txt" onclick="showPage('dashboard')"></div>
+<!-- ── EDIT JOB MODAL ── -->
+<div class="modal-overlay" id="editJobModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('editJobModal')">✕</button>
+    <h3>Edit Job</h3>
+    <input type="hidden" id="editJobId"/>
+    <div class="field"><label>Job Title</label><input type="text" id="editJobTitle"/></div>
+    <div class="field"><label>Budget</label><input type="text" id="editJobBudget"/></div>
+    <div class="field"><label>Description</label><textarea id="editJobDesc"></textarea></div>
+    <div class="field"><label>Status</label>
+      <select id="editJobStatus">
+        <option value="open">Open</option>
+        <option value="closed">Closed</option>
+        <option value="hired">Hired</option>
+      </select>
     </div>
-    <div id="navGuest">
-      <button class="btn-outline" onclick="showPage('login')" style="margin-right:8px">Log in</button>
-      <button class="btn-blue" onclick="showPage('login')">Join free</button>
-    </div>
-  </div>
-</nav>
-
-<!-- NOTIFICATION DROPDOWN -->
-<div class="notif-dropdown" id="notifDropdown">
-  <div class="notif-header">
-    <span>🔔 Notifications</span>
-    <button class="notif-clear" onclick="clearAllNotifs()">Mark all read</button>
-  </div>
-  <div class="notif-list" id="notifList">
-    <div class="notif-empty">No notifications yet</div>
+    <button class="join-btn" onclick="saveEditJob()">Save Changes</button>
   </div>
 </div>
 
-<!-- HOME PAGE -->
+<!-- ── APPLY MODAL ── -->
+<div class="modal-overlay" id="applyModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('applyModal')">✕</button>
+    <h3>Apply for Job</h3>
+    <input type="hidden" id="applyJobId"/>
+    <input type="hidden" id="applyJobPoster"/>
+    <p id="applyJobTitle" style="font-size:14px;color:var(--muted);margin-bottom:18px"></p>
+    <div class="field"><label>Cover Letter</label><textarea id="applyCover" placeholder="Introduce yourself and explain why you're the right fit..." style="min-height:140px"></textarea></div>
+    <div class="field"><label>Your Rate for This Job</label><input type="text" id="applyRate" placeholder="e.g. $35 fixed / $15/hr"/></div>
+    <button class="join-btn" id="applySubmitBtn" onclick="submitApplication()">Submit Application</button>
+  </div>
+</div>
+
+<!-- ── REVIEW MODAL ── -->
+<div class="modal-overlay" id="reviewModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('reviewModal')">✕</button>
+    <h3>Leave a Review</h3>
+    <input type="hidden" id="reviewTargetUid"/>
+    <p id="reviewTargetName" style="font-size:14px;color:var(--muted);margin-bottom:18px"></p>
+    <div class="field"><label>Rating</label>
+      <div class="star-rating" id="starRating">
+        <button class="star-btn" data-v="1" onclick="setStars(1)">★</button>
+        <button class="star-btn" data-v="2" onclick="setStars(2)">★</button>
+        <button class="star-btn" data-v="3" onclick="setStars(3)">★</button>
+        <button class="star-btn" data-v="4" onclick="setStars(4)">★</button>
+        <button class="star-btn" data-v="5" onclick="setStars(5)">★</button>
+      </div>
+    </div>
+    <div class="field"><label>Review</label><textarea id="reviewText" placeholder="Share your experience working with this person..."></textarea></div>
+    <button class="join-btn" onclick="submitReview()">Submit Review</button>
+  </div>
+</div>
+
+<!-- ── REPORT MODAL ── -->
+<div class="modal-overlay" id="reportModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('reportModal')">✕</button>
+    <h3>Report User</h3>
+    <input type="hidden" id="reportTargetUid"/>
+    <div class="report-reasons">
+      <div class="report-reason"><input type="radio" name="reportReason" id="r1" value="spam"/><label for="r1">Spam or scam</label></div>
+      <div class="report-reason"><input type="radio" name="reportReason" id="r2" value="fake"/><label for="r2">Fake profile</label></div>
+      <div class="report-reason"><input type="radio" name="reportReason" id="r3" value="harassment"/><label for="r3">Harassment</label></div>
+      <div class="report-reason"><input type="radio" name="reportReason" id="r4" value="other"/><label for="r4">Other</label></div>
+    </div>
+    <div class="field"><label>Details (optional)</label><textarea id="reportDetails" placeholder="Any additional context..."></textarea></div>
+    <button class="join-btn" onclick="submitReport()">Submit Report</button>
+  </div>
+</div>
+
+<!-- ── IMAGE PREVIEW MODAL ── -->
+<div class="modal-overlay" id="imgPreviewModal" onclick="closeModal('imgPreviewModal')" style="cursor:zoom-out">
+  <img id="imgPreviewSrc" style="max-width:90vw;max-height:90vh;border-radius:12px"/>
+</div>
+
+<!-- ── NAV ── -->
+<nav class="nav">
+  <div style="display:flex;align-items:center;gap:16px">
+    <div class="logo" onclick="showPage('home')"><div class="logo-dot"></div>Growth</div>
+    <div id="navDesktopLinks" style="display:flex;gap:6px">
+      <button class="btn-ghost" onclick="showPage('browse')" style="display:none" id="navBrowseBtn">Browse Talent</button>
+    </div>
+  </div>
+  <div class="nav-btns">
+    <div class="nav-user" id="navUser">
+      <button class="btn-ghost" onclick="showPage('browse')">Browse</button>
+      <button class="btn-ghost" onclick="showPage('chat')">💬</button>
+      <button class="notif-bell" id="notifBell" onclick="toggleNotifDropdown()">🔔<span class="notif-badge" id="notifBadge"></span></button>
+      <div id="navAv" class="nav-av" onclick="showPage('dashboard')"></div>
+    </div>
+    <div id="navGuest" style="display:flex;gap:8px">
+      <button class="btn-ghost" onclick="showPage('login')">Log in</button>
+      <button class="btn-blue" onclick="showPage('login')">Join free</button>
+    </div>
+    <button class="hamburger" id="hamburgerBtn" onclick="toggleMobileMenu()">☰</button>
+  </div>
+</nav>
+
+<!-- ── NOTIFICATION DROPDOWN ── -->
+<div class="notif-dropdown" id="notifDropdown">
+  <div class="notif-header"><span>🔔 Notifications</span><button class="notif-clear" onclick="clearAllNotifs()">Mark all read</button></div>
+  <div class="notif-list" id="notifList"><div class="notif-empty">No notifications yet</div></div>
+</div>
+
+<!-- ────────────────────────────────────────────
+     HOME PAGE
+     ──────────────────────────────────────────── -->
 <div class="page active" id="page-home">
   <div class="hero">
     <div class="hero-tag">⚡ Only 5% commission — keep 95% of what you earn</div>
     <h1>The freelance platform built for<br><span>today's generation</span></h1>
     <p>Beginners get hired. Clients save money. No hidden fees — ever.</p>
     <div class="search-row">
-      <input type="text" id="searchInput" placeholder="Search jobs, skills, freelancers..."/>
+      <input type="text" id="searchInput" placeholder="Search jobs, skills, freelancers..." onkeydown="if(event.key==='Enter')doSearch()"/>
       <button onclick="doSearch()">🔍 Search</button>
     </div>
     <div class="stats-row">
@@ -309,628 +570,1377 @@
   </div>
   <div class="section"><div class="sec-title">Latest jobs</div><div class="sec-sub">Fresh opportunities posted today</div></div>
   <div class="jobs" id="jobsGrid">
-    <div class="job-card">
-      <div class="job-top"><span class="job-title">Logo design for tech startup</span><span class="job-budget">$20–$50</span></div>
-      <p class="job-desc">Need a clean modern logo. Simple, bold and memorable for a global brand.</p>
-      <div class="tags"><span class="tag">Logo</span><span class="tag">Illustrator</span><span class="tag">Branding</span></div>
-      <div class="job-footer"><div class="poster"><div class="av">JK</div><span class="poster-name">James K. · USA</span></div><button class="apply-btn" onclick="requireLogin()">Apply free</button></div>
-    </div>
-    <div class="job-card">
-      <div class="job-top"><span class="job-title">WordPress site setup</span><span class="job-budget">$30–$80</span></div>
-      <p class="job-desc">Set up a blog with theme, plugins and 3 sample posts. Mobile friendly required.</p>
-      <div class="tags"><span class="tag">WordPress</span><span class="tag">HTML</span><span class="tag">CSS</span></div>
-      <div class="job-footer"><div class="poster"><div class="av">SA</div><span class="poster-name">Sara A. · UK</span></div><button class="apply-btn" onclick="requireLogin()">Apply free</button></div>
-    </div>
-    <div class="job-card">
-      <div class="job-top"><span class="job-title">Instagram Reels editing x5</span><span class="job-budget">$15–$40</span></div>
-      <p class="job-desc">Edit 5 short videos with captions, transitions and music. Fast delivery needed.</p>
-      <div class="tags"><span class="tag">Video</span><span class="tag">Reels</span><span class="tag">CapCut</span></div>
-      <div class="job-footer"><div class="poster"><div class="av">MR</div><span class="poster-name">Maria R. · Canada</span></div><button class="apply-btn" onclick="requireLogin()">Apply free</button></div>
-    </div>
-    <div class="job-card">
-      <div class="job-top"><span class="job-title">Python script for data scraping</span><span class="job-budget">$40–$100</span></div>
-      <p class="job-desc">Build a simple scraper to extract product data from 3 e-commerce websites.</p>
-      <div class="tags"><span class="tag">Python</span><span class="tag">Scrapy</span><span class="tag">Data</span></div>
-      <div class="job-footer"><div class="poster"><div class="av">LK</div><span class="poster-name">Li K. · Singapore</span></div><button class="apply-btn" onclick="requireLogin()">Apply free</button></div>
-    </div>
+    <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
   </div>
   <div class="divider"></div>
   <div class="section"><div class="sec-title">Fresh talent</div><div class="sec-sub">New freelancers ready to prove themselves</div></div>
-  <div class="fl-grid">
-    <div class="fl-card"><div class="fl-av">AH</div><div class="new-pill">New talent</div><div class="fl-name">Ali Hassan</div><div class="fl-role">Graphic Designer · Pakistan</div><div class="fl-rate">From $10 / project</div><div class="fl-stars">★★★★★</div><button class="msg-btn" onclick="requireLogin()">💬 Message free</button></div>
-    <div class="fl-card"><div class="fl-av">FN</div><div class="new-pill">New talent</div><div class="fl-name">Fatima Noor</div><div class="fl-role">Content Writer · India</div><div class="fl-rate">From $8 / article</div><div class="fl-stars">★★★★★</div><button class="msg-btn" onclick="requireLogin()">💬 Message free</button></div>
-    <div class="fl-card"><div class="fl-av">ZK</div><div class="new-pill">New talent</div><div class="fl-name">Zaid Khan</div><div class="fl-role">Web Developer · Pakistan</div><div class="fl-rate">From $25 / project</div><div class="fl-stars">★★★★★</div><button class="msg-btn" onclick="requireLogin()">💬 Message free</button></div>
-    <div class="fl-card"><div class="fl-av">LM</div><div class="new-pill">New talent</div><div class="fl-name">Lena M.</div><div class="fl-role">Video Editor · Nigeria</div><div class="fl-rate">From $12 / video</div><div class="fl-stars">★★★★★</div><button class="msg-btn" onclick="requireLogin()">💬 Message free</button></div>
+  <div class="fl-grid" id="homeFreelancers">
+    <div class="skeleton" style="height:200px"></div><div class="skeleton" style="height:200px"></div>
+    <div class="skeleton" style="height:200px"></div><div class="skeleton" style="height:200px"></div>
   </div>
   <div class="divider" style="margin-bottom:32px"></div>
   <div class="why-grid">
     <div class="why-card"><div class="why-icon">💸</div><div class="why-title">Only 5% fee</div><div class="why-desc">Keep 95% of every payment.</div></div>
-    <div class="why-card"><div class="why-icon">💬</div><div class="why-title">Free meetings</div><div class="why-desc">Talk to clients directly — no pay-to-chat fees.</div></div>
+    <div class="why-card"><div class="why-icon">💬</div><div class="why-title">Free meetings</div><div class="why-desc">Talk directly — no pay-to-chat fees.</div></div>
     <div class="why-card"><div class="why-icon">🚀</div><div class="why-title">Beginners first</div><div class="why-desc">New freelancers get featured, not buried.</div></div>
     <div class="why-card"><div class="why-icon">🌍</div><div class="why-title">100% global</div><div class="why-desc">Work with anyone, from anywhere.</div></div>
+    <div class="why-card"><div class="why-icon">🔒</div><div class="why-title">Safe & verified</div><div class="why-desc">Report abuse. Profiles are moderated.</div></div>
+    <div class="why-card"><div class="why-icon">⭐</div><div class="why-title">Real reviews</div><div class="why-desc">Honest ratings from real clients.</div></div>
   </div>
   <div class="cta">
     <div><h3>Have a skill? Start earning today.</h3><p>Free to join — no subscription, no tricks.</p></div>
-    <button class="cta-btn" onclick="showPage('login')">Get started →</button>
+    <button class="btn-blue" onclick="showPage('login')" style="padding:13px 28px;font-size:14px">Get started →</button>
   </div>
   <footer>© 2026 Growth — Where beginners grow into professionals</footer>
 </div>
 
-<!-- LOGIN PAGE -->
+<!-- ────────────────────────────────────────────
+     SEARCH RESULTS PAGE
+     ──────────────────────────────────────────── -->
+<div class="page" id="page-search">
+  <div class="search-page">
+    <div class="search-results-header">
+      <div>
+        <h2 style="font-size:18px;font-weight:800;color:#fff;letter-spacing:-.02em" id="searchHeading">Results</h2>
+        <div class="results-count" id="resultsCount"></div>
+      </div>
+      <div class="sort-row">
+        <span class="sort-label">Sort:</span>
+        <select class="filter-select" id="searchSort" onchange="renderSearchResults()">
+          <option value="newest">Newest</option>
+          <option value="budget_high">Budget: High</option>
+          <option value="budget_low">Budget: Low</option>
+        </select>
+      </div>
+    </div>
+    <div id="searchResultsGrid" class="jobs" style="padding:0;margin-bottom:32px"></div>
+    <div style="margin-top:16px;border-top:1px solid var(--border);padding-top:24px">
+      <div class="sec-title" style="margin-bottom:16px">Freelancers matching your search</div>
+      <div id="searchFreelancers" class="fl-grid" style="padding:0"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ────────────────────────────────────────────
+     BROWSE TALENT PAGE
+     ──────────────────────────────────────────── -->
+<div class="page" id="page-browse">
+  <div class="browse-header">
+    <div>
+      <h2 style="font-size:18px;font-weight:800;color:#fff;letter-spacing:-.02em">Browse Talent</h2>
+      <p style="font-size:13px;color:var(--muted)">Find the right freelancer for your project</p>
+    </div>
+  </div>
+  <div class="browse-filters">
+    <select class="filter-select" id="filterCategory" onchange="loadFreelancers()">
+      <option value="">All Categories</option>
+      <option value="Design">🎨 Design</option>
+      <option value="Development">💻 Development</option>
+      <option value="Writing">✏️ Writing</option>
+      <option value="Video">🎬 Video</option>
+      <option value="Marketing">📢 Marketing</option>
+      <option value="AI & Data">🤖 AI & Data</option>
+    </select>
+    <select class="filter-select" id="filterSort" onchange="loadFreelancers()">
+      <option value="newest">Newest</option>
+      <option value="rating">Top Rated</option>
+      <option value="price_low">Price: Low</option>
+      <option value="price_high">Price: High</option>
+    </select>
+  </div>
+  <div class="fl-browse-grid" id="freelancerGrid">
+    <div class="skeleton" style="height:220px"></div>
+    <div class="skeleton" style="height:220px"></div>
+    <div class="skeleton" style="height:220px"></div>
+    <div class="skeleton" style="height:220px"></div>
+  </div>
+</div>
+
+<!-- ────────────────────────────────────────────
+     PUBLIC PROFILE PAGE
+     ──────────────────────────────────────────── -->
+<div class="page" id="page-profile-view">
+  <div class="profile-page" id="profileViewContent">
+    <div style="text-align:center;padding:60px;color:var(--muted)"><span class="loading"></span> Loading profile...</div>
+  </div>
+</div>
+
+<!-- ────────────────────────────────────────────
+     JOB DETAIL PAGE
+     ──────────────────────────────────────────── -->
+<div class="page" id="page-job-detail">
+  <div class="job-detail" id="jobDetailContent">
+    <div style="text-align:center;padding:60px;color:var(--muted)"><span class="loading"></span> Loading job...</div>
+  </div>
+</div>
+
+<!-- ────────────────────────────────────────────
+     LOGIN / SIGNUP PAGE
+     ──────────────────────────────────────────── -->
 <div class="page" id="page-login">
   <div class="login-page">
     <div class="login-card">
-      <div id="form-view">
-        <h2>Create your account</h2>
-        <p class="sub">Join free — takes less than a minute</p>
-        <div class="pic-section">
-          <div class="pic-circle" id="picCircle" onclick="document.getElementById('picInput').click()">
-            <img id="picPreview" alt="Profile photo"/>
-            <span id="picIcon" style="font-size:26px">📷</span>
-          </div>
-          <input type="file" accept="image/*" id="picInput" style="display:none"/>
-          <span class="pic-hint">Tap to upload your photo</span>
-        </div>
-        <div class="field"><label>Your full name</label><input type="text" id="nameInput" placeholder="e.g. Ali Hassan"/><div class="error" id="nameError">Please enter your name</div></div>
-        <div class="field"><label>Your role</label>
-          <select id="roleInput">
-            <option value="freelancer">🧑‍💻 Freelancer — I want to find work</option>
-            <option value="client">💼 Client — I want to hire talent</option>
-          </select>
-        </div>
-        <div class="field"><label>Your skill / profession</label><input type="text" id="skillInput" placeholder="e.g. Graphic Designer, Web Developer"/></div>
-        <div class="or-row"><div class="or-line"></div><span class="or-text">connect with Gmail</span><div class="or-line"></div></div>
-        <div class="gmail-row" id="gmailBtn">
-          <span style="font-size:18px">📧</span>
-          <span class="gmail-text" id="gmailText">Connect your Gmail</span>
-          <span class="gmail-badge" id="gmailBadge">✓ Connected</span>
-        </div>
-        <div class="error" id="gmailError">Please connect your Gmail to continue</div>
-        <button class="join-btn" id="joinBtn">Create my account</button>
-        <div class="terms">By joining you agree to our <span>Terms</span> and <span>Privacy Policy</span></div>
+      <!-- Auth Tabs -->
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tabSignup" onclick="switchAuthTab('signup')">Create Account</button>
+        <button class="auth-tab" id="tabLogin" onclick="switchAuthTab('login')">Log In</button>
       </div>
-      <div class="success-view" id="success-view">
-        <div class="success-circle">✓</div>
-        <h2 id="welcome-msg">Welcome to Growth!</h2>
-        <p>Your account is ready. Start finding work or hire talent — completely free.</p>
-        <button class="success-btn" onclick="showPage('dashboard')">Go to Dashboard →</button>
+
+      <!-- SIGNUP VIEW -->
+      <div id="signupView">
+        <div id="form-view">
+          <div class="pic-section">
+            <div class="pic-circle" id="picCircle" onclick="document.getElementById('picInput').click()">
+              <img id="picPreview" alt="Profile photo"/>
+              <span id="picIcon" style="font-size:24px">📷</span>
+            </div>
+            <input type="file" accept="image/*" id="picInput" style="display:none"/>
+            <span class="pic-hint">Tap to upload your photo</span>
+          </div>
+          <div class="field"><label>Your Full Name</label><input type="text" id="nameInput" placeholder="e.g. Ali Hassan"/><div class="error" id="nameError">Please enter your name</div></div>
+          <div class="field"><label>Your Role</label>
+            <select id="roleInput">
+              <option value="freelancer">🧑‍💻 Freelancer — I want to find work</option>
+              <option value="client">💼 Client — I want to hire talent</option>
+            </select>
+          </div>
+          <div class="field"><label>Your Skill / Profession</label><input type="text" id="skillInput" placeholder="e.g. Graphic Designer, Web Developer"/></div>
+          <div class="or-row"><div class="or-line"></div><span class="or-text">connect with Gmail</span><div class="or-line"></div></div>
+          <div class="gmail-row" id="gmailBtn">
+            <span style="font-size:18px">📧</span>
+            <span class="gmail-text" id="gmailText">Connect your Gmail</span>
+            <span class="gmail-badge" id="gmailBadge">✓ Connected</span>
+          </div>
+          <div class="error" id="gmailError">Please connect your Gmail to continue</div>
+          <button class="join-btn" id="joinBtn">Create my account</button>
+          <div class="terms">By joining you agree to our <span>Terms</span> and <span>Privacy Policy</span></div>
+        </div>
+        <div class="success-view" id="success-view">
+          <div class="success-circle">✓</div>
+          <h2 id="welcome-msg">Welcome to Growth!</h2>
+          <p>Your account is ready. Start finding work or hire talent — completely free.</p>
+          <button class="success-btn" onclick="showPage('dashboard')">Go to Dashboard →</button>
+        </div>
+      </div>
+
+      <!-- LOGIN VIEW -->
+      <div id="loginView" style="display:none">
+        <p style="font-size:14px;color:var(--muted);text-align:center;margin-bottom:24px">Welcome back! Connect with your Gmail to log in.</p>
+        <div class="gmail-row" id="loginGmailBtn">
+          <span style="font-size:18px">📧</span>
+          <span class="gmail-text" id="loginGmailText">Connect your Gmail</span>
+          <span class="gmail-badge" id="loginGmailBadge">✓ Connected</span>
+        </div>
+        <div class="error" id="loginError">No account found with this Gmail. Please sign up.</div>
+        <button class="join-btn" id="loginBtn" style="margin-top:8px">Log In</button>
+        <div class="terms" style="margin-top:16px">Don't have an account? <span onclick="switchAuthTab('signup')" style="color:var(--blue-light);cursor:pointer">Join free →</span></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- DASHBOARD PAGE -->
+<!-- ────────────────────────────────────────────
+     DASHBOARD PAGE
+     ──────────────────────────────────────────── -->
 <div class="page" id="page-dashboard">
   <div class="dash">
     <div class="dash-header">
-      <div id="dashAv" class="dash-av-txt"></div>
+      <div class="dash-av-wrap">
+        <div id="dashAv" class="dash-av-txt"></div>
+        <div class="dash-av-edit" onclick="document.getElementById('dashPhotoInput').click()" title="Change photo">✏️</div>
+        <input type="file" accept="image/*" id="dashPhotoInput" style="display:none"/>
+      </div>
       <div class="dash-info">
         <h2 id="dashName">Welcome!</h2>
-        <p id="dashEmail" style="color:var(--muted);font-size:13px"></p>
-        <p id="dashRole" style="color:var(--blue-light);font-size:12px;margin-top:2px"></p>
+        <p id="dashEmail" style="font-size:13px;color:var(--muted)"></p>
+        <div class="dash-role-badge" id="dashRoleBadge"></div>
       </div>
+      <button class="logout-btn" onclick="doLogout()" style="margin-left:auto">Log out</button>
     </div>
     <div class="dash-tabs">
-      <button class="dash-tab active" onclick="switchTab('overview')">Overview</button>
-      <button class="dash-tab" onclick="switchTab('myjobs')">My Jobs</button>
-      <button class="dash-tab" onclick="switchTab('profile')">Profile</button>
+      <button class="dash-tab active" onclick="switchTab('overview',this)">Overview</button>
+      <button class="dash-tab" onclick="switchTab('myjobs',this)">My Jobs</button>
+      <button class="dash-tab" onclick="switchTab('applications',this)">Applications</button>
+      <button class="dash-tab" onclick="switchTab('profile',this)">Profile</button>
     </div>
 
     <!-- Overview -->
     <div class="dash-panel active" id="panel-overview">
       <div class="dash-grid">
         <div class="dash-stat"><div class="dash-stat-num" id="statJobs">0</div><div class="dash-stat-label">Jobs Posted</div></div>
+        <div class="dash-stat"><div class="dash-stat-num" id="statApps">0</div><div class="dash-stat-label">Applications</div></div>
         <div class="dash-stat"><div class="dash-stat-num" id="statMessages">0</div><div class="dash-stat-label">Messages</div></div>
         <div class="dash-stat"><div class="dash-stat-num">5%</div><div class="dash-stat-label">Platform Fee</div></div>
-        <div class="dash-stat"><div class="dash-stat-num">✅</div><div class="dash-stat-label">Account Active</div></div>
       </div>
-      <button class="post-job-btn" onclick="openModal('postJobModal')">+ Post a Job</button>
-      <button class="btn-outline" onclick="showPage('chat')" style="margin-bottom:20px;margin-left:8px">💬 Open Messages</button>
+      <div class="dash-actions">
+        <button class="post-job-btn" onclick="openModal('postJobModal')">+ Post a Job</button>
+        <button class="btn-ghost" onclick="showPage('chat')">💬 Messages</button>
+        <button class="btn-ghost" onclick="showPage('browse')">🔍 Browse Talent</button>
+      </div>
       <div id="overviewJobs"></div>
     </div>
 
     <!-- My Jobs -->
     <div class="dash-panel" id="panel-myjobs">
-      <button class="post-job-btn" onclick="openModal('postJobModal')">+ Post a Job</button>
-      <div id="myJobsList" style="display:grid;gap:12px"></div>
+      <button class="post-job-btn" onclick="openModal('postJobModal')" style="margin-bottom:20px">+ Post a Job</button>
+      <div id="myJobsList"></div>
     </div>
 
-    <!-- Profile -->
+    <!-- Applications -->
+    <div class="dash-panel" id="panel-applications">
+      <div id="myApplicationsList"><div style="color:var(--muted);font-size:13px">Loading applications...</div></div>
+    </div>
+
+    <!-- Profile Editor -->
     <div class="dash-panel" id="panel-profile">
-      <div style="max-width:480px">
+      <div style="max-width:520px">
         <div class="field"><label>Full Name</label><input type="text" id="profileName"/></div>
         <div class="field"><label>Skill / Profession</label><input type="text" id="profileSkill"/></div>
         <div class="field"><label>Bio</label><textarea id="profileBio" placeholder="Tell clients about yourself..."></textarea></div>
         <div class="field"><label>Hourly Rate / Starting Price</label><input type="text" id="profileRate" placeholder="e.g. From $15/hr"/></div>
+        <div class="field"><label>Skills / Tags (comma separated)</label><input type="text" id="profileTags" placeholder="e.g. React, Figma, Python, SEO"/></div>
+        <div class="field"><label>Location</label><input type="text" id="profileLocation" placeholder="e.g. Karachi, Pakistan"/></div>
+        <div class="field"><label>Portfolio Link</label><input type="url" id="profilePortfolio" placeholder="https://yourportfolio.com"/></div>
         <button class="join-btn" onclick="saveProfile()" style="max-width:200px">Save Profile</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- CHAT PAGE -->
+<!-- ────────────────────────────────────────────
+     CHAT PAGE
+     ──────────────────────────────────────────── -->
 <div class="page" id="page-chat">
-  <div class="chat-layout">
-    <div class="chat-sidebar">
-      <div class="chat-sidebar-header">💬 Messages</div>
+  <div class="chat-layout" id="chatLayout">
+    <div class="chat-sidebar" id="chatSidebar">
+      <div class="chat-sidebar-header">
+        💬 Messages
+      </div>
+      <div class="chat-search">
+        <input type="text" placeholder="Search conversations..." id="chatSearchInput" oninput="filterContacts()"/>
+      </div>
       <div id="contactsList">
-        <div style="padding:20px;color:var(--muted);font-size:13px;text-align:center">No conversations yet.<br>Apply to jobs to start chatting!</div>
+        <div style="padding:24px;color:var(--muted);font-size:13px;text-align:center">No conversations yet.<br/>Apply to jobs to start chatting!</div>
       </div>
     </div>
-    <div class="chat-main">
+    <div class="chat-main" id="chatMain">
       <div id="chatNoSelect" class="chat-no-select">
         <div style="font-size:48px">💬</div>
-        <div style="font-size:14px;color:var(--muted)">Select a conversation to start chatting</div>
+        <div style="font-size:14px;color:var(--muted)">Select a conversation</div>
       </div>
       <div id="chatActive" style="display:none;flex-direction:column;height:100%">
         <div class="chat-topbar">
-          <div>
+          <button class="chat-back-btn" onclick="closeChatThread()">←</button>
+          <div class="av" id="chatWithAv" style="width:38px;height:38px;font-size:13px;flex-shrink:0"></div>
+          <div style="flex:1">
             <div class="chat-topbar-name" id="chatWithName">—</div>
-            <div class="chat-topbar-status">● Online</div>
+            <div class="chat-topbar-status" id="chatOnlineStatus">● Online</div>
+          </div>
+          <button class="btn-ghost" id="chatProfileBtn" onclick="" style="font-size:12px;padding:6px 12px">View Profile</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+          <div class="typing-indicator" id="typingIndicator">
+            <div class="typing-dots"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>
           </div>
         </div>
-        <div class="chat-messages" id="chatMessages"></div>
         <div class="chat-input-row">
-          <input class="chat-input" id="chatInput" placeholder="Type a message..." onkeydown="if(event.key==='Enter')sendMessage()"/>
-          <button class="chat-send-btn" onclick="sendMessage()">Send</button>
+          <input type="file" id="chatFileInput" style="display:none" accept="image/*" onchange="sendImageMessage()"/>
+          <button class="chat-file-btn" onclick="document.getElementById('chatFileInput').click()" title="Send image">📎</button>
+          <textarea class="chat-input" id="chatInput" placeholder="Type a message..." rows="1" onkeydown="chatKeyDown(event)" oninput="autoResizeTextarea(this);handleTyping()"></textarea>
+          <button class="chat-send-btn" onclick="sendMessage()">➤</button>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- FIREBASE + SCRIPTS -->
+<!-- ────────────────────────────────────────────
+     FIREBASE + APP SCRIPTS
+     ──────────────────────────────────────────── -->
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getAuth, signInWithCredential, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-  import { getFirestore, doc, setDoc, getDoc, collection, addDoc, query, where, orderBy, onSnapshot, serverTimestamp, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import {
+  getFirestore, doc, setDoc, getDoc, collection, addDoc, deleteDoc,
+  query, where, orderBy, onSnapshot, serverTimestamp, getDocs,
+  updateDoc, limit, writeBatch
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import {
+  getStorage, ref as storageRef, uploadString, getDownloadURL
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyB1wdi9OiwRr0o-wgtp0mZv7x0ELUnUeoo",
-    authDomain: "growth-app-95c52.firebaseapp.com",
-    projectId: "growth-app-95c52",
-    storageBucket: "growth-app-95c52.firebasestorage.app",
-    messagingSenderId: "682654852015",
-    appId: "1:682654852015:web:72eb9ac8b12c190d5b055a"
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyB1wdi9OiwRr0o-wgtp0mZv7x0ELUnUeoo",
+  authDomain: "growth-app-95c52.firebaseapp.com",
+  projectId: "growth-app-95c52",
+  storageBucket: "growth-app-95c52.firebasestorage.app",
+  messagingSenderId: "682654852015",
+  appId: "1:682654852015:web:72eb9ac8b12c190d5b055a"
+};
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const storage = getStorage(app);
 
-  // ── State ──
-  let currentUser = null;
-  let currentChatId = null;
-  let currentChatWith = null;
-  let messageUnsub = null;
-  let tokenClient = null;
-  let gmailConnected = false;
-  let googleUserInfo = null;
+// ── State ──────────────────────────────────────────────────────
+let currentUser = null;
+let currentChatId = null;
+let currentChatWith = null;
+let messageUnsub = null;
+let notifsUnsub = null;
+let tokenClient = null;
+let gmailConnected = false;
+let googleUserInfo = null;
+let loginGmailConnected = false;
+let loginGoogleInfo = null;
+let selectedStars = 0;
+let allContacts = [];
+let currentJobFilter = 'All';
+let searchData = { jobs: [], users: [], query: '' };
+let typingTimeout = null;
+let allJobs = [];
 
-  // ── Expose globals ──
-  window.db = db;
-  window.auth = auth;
-  window.currentUserRef = () => currentUser;
+window.db = db; window.auth = auth; window.currentUserRef = () => currentUser;
 
-  // ── Google OAuth ──
-  window.addEventListener('load', function(){
-    tokenClient = google.accounts.oauth2.initTokenClient({
-      client_id: '531427181975-jvnaeguk39tl2bnobhgci76gtad2cmvp.apps.googleusercontent.com',
-      scope: 'email profile',
-      callback: async function(tokenResponse) {
-        if(tokenResponse && tokenResponse.access_token) {
-          const info = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-            headers: { Authorization: 'Bearer ' + tokenResponse.access_token }
-          }).then(r => r.json());
+// ── Google OAuth ──────────────────────────────────────────────
+window.addEventListener('load', function(){
+  if(typeof google === 'undefined') return;
 
-          googleUserInfo = info;
-          gmailConnected = true;
-
-          document.getElementById('gmailText').textContent = info.email;
-          document.getElementById('gmailText').style.color = '#fff';
-          document.getElementById('gmailBadge').style.display = 'inline-block';
-          document.getElementById('gmailBtn').style.borderColor = '#2D6FFF';
-          document.getElementById('gmailError').style.display = 'none';
-
-          if(!document.getElementById('nameInput').value.trim() && info.name)
-            document.getElementById('nameInput').value = info.name;
-
-          if(info.picture){
-            const preview = document.getElementById('picPreview');
-            const icon = document.getElementById('picIcon');
-            const circle = document.getElementById('picCircle');
-            preview.src = info.picture;
-            preview.style.display = 'block';
-            icon.style.display = 'none';
-            circle.style.borderColor = '#2D6FFF';
-            circle.style.borderStyle = 'solid';
-          }
-        }
-      }
-    });
+  // Signup OAuth
+  tokenClient = google.accounts.oauth2.initTokenClient({
+    client_id: '531427181975-jvnaeguk39tl2bnobhgci76gtad2cmvp.apps.googleusercontent.com',
+    scope: 'email profile',
+    callback: async function(r){
+      if(!r?.access_token) return;
+      const info = await fetch('https://www.googleapis.com/oauth2/v3/userinfo',{headers:{Authorization:'Bearer '+r.access_token}}).then(x=>x.json());
+      googleUserInfo = info; gmailConnected = true;
+      document.getElementById('gmailText').textContent = info.email;
+      document.getElementById('gmailText').style.color = '#fff';
+      document.getElementById('gmailBadge').style.display = 'inline-block';
+      document.getElementById('gmailBtn').style.borderColor = 'var(--blue)';
+      document.getElementById('gmailError').style.display = 'none';
+      if(!document.getElementById('nameInput').value.trim() && info.name)
+        document.getElementById('nameInput').value = info.name;
+      if(info.picture){ setPreviewImg('picPreview','picIcon','picCircle',info.picture); }
+    }
   });
 
-  document.getElementById('gmailBtn').addEventListener('click', function(){
-    if(gmailConnected) return;
-    tokenClient.requestAccessToken({ prompt: 'select_account' });
+  // Login OAuth (separate client)
+  window.loginTokenClient = google.accounts.oauth2.initTokenClient({
+    client_id: '531427181975-jvnaeguk39tl2bnobhgci76gtad2cmvp.apps.googleusercontent.com',
+    scope: 'email profile',
+    callback: async function(r){
+      if(!r?.access_token) return;
+      const info = await fetch('https://www.googleapis.com/oauth2/v3/userinfo',{headers:{Authorization:'Bearer '+r.access_token}}).then(x=>x.json());
+      loginGoogleInfo = info; loginGmailConnected = true;
+      document.getElementById('loginGmailText').textContent = info.email;
+      document.getElementById('loginGmailText').style.color = '#fff';
+      document.getElementById('loginGmailBadge').style.display = 'inline-block';
+      document.getElementById('loginGmailBtn').style.borderColor = 'var(--blue)';
+      document.getElementById('loginError').style.display = 'none';
+    }
   });
+});
 
-  // ── Picture upload ──
-  document.getElementById('picInput').addEventListener('change', function(){
-    const file = this.files[0];
-    if(!file) return;
-    const reader = new FileReader();
-    reader.onload = e => {
-      document.getElementById('picPreview').src = e.target.result;
-      document.getElementById('picPreview').style.display = 'block';
-      document.getElementById('picIcon').style.display = 'none';
-      document.getElementById('picCircle').style.borderColor = '#2D6FFF';
-    };
-    reader.readAsDataURL(file);
-  });
+document.getElementById('gmailBtn').addEventListener('click',()=>{ if(!gmailConnected) tokenClient.requestAccessToken({prompt:'select_account'}); });
+document.getElementById('loginGmailBtn').addEventListener('click',()=>{ if(!loginGmailConnected && window.loginTokenClient) window.loginTokenClient.requestAccessToken({prompt:'select_account'}); });
 
-  // ── Create Account ──
-  document.getElementById('joinBtn').addEventListener('click', async function(){
-    const name = document.getElementById('nameInput').value.trim();
-    let valid = true;
-    document.getElementById('nameError').style.display = 'none';
-    document.getElementById('gmailError').style.display = 'none';
-    if(!name){ document.getElementById('nameError').style.display='block'; valid=false; }
-    if(!gmailConnected){ document.getElementById('gmailError').style.display='block'; valid=false; }
-    if(!valid) return;
+function setPreviewImg(imgId, iconId, circleId, src){
+  const img = document.getElementById(imgId);
+  const icon = document.getElementById(iconId);
+  img.src = src; img.style.display = 'block';
+  icon.style.display = 'none';
+  document.getElementById(circleId).style.borderColor = 'var(--blue)';
+  document.getElementById(circleId).style.borderStyle = 'solid';
+}
 
-    this.disabled = true;
-    this.innerHTML = '<span class="loading"></span>Creating account...';
+// ── Picture upload ─────────────────────────────────────────────
+document.getElementById('picInput').addEventListener('change', function(){
+  const file = this.files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e => setPreviewImg('picPreview','picIcon','picCircle',e.target.result);
+  reader.readAsDataURL(file);
+});
 
+// Dashboard photo change
+document.getElementById('dashPhotoInput').addEventListener('change', async function(){
+  const file = this.files[0]; if(!file||!currentUser) return;
+  const reader = new FileReader();
+  reader.onload = async e => {
     try {
-      const uid = googleUserInfo.sub;
-      const userData = {
-        uid, name,
-        email: googleUserInfo.email,
-        photo: googleUserInfo.picture || '',
-        role: document.getElementById('roleInput').value,
-        skill: document.getElementById('skillInput').value,
-        bio: '',
-        rate: '',
-        createdAt: serverTimestamp()
-      };
-
-      await setDoc(doc(db, 'users', uid), userData);
-      currentUser = userData;
+      // Store as base64 in Firestore (simple approach without Firebase Storage billing)
+      const b64 = e.target.result;
+      await setDoc(doc(db,'users',currentUser.uid),{photo:b64},{merge:true});
+      currentUser.photo = b64;
       updateNavUI();
-      document.getElementById('welcome-msg').textContent = 'Welcome, ' + name + '!';
-      document.getElementById('form-view').style.display = 'none';
-      document.getElementById('success-view').style.display = 'flex';
       loadDashboard();
-      showToast('🎉 Account created successfully!');
-      loadNotifs();
-    } catch(err) {
-      showToast('Error: ' + err.message);
-      this.disabled = false;
-      this.innerHTML = 'Create my account';
-    }
-  });
-
-  // ── Update Nav UI ──
-  function updateNavUI(){
-    if(!currentUser) return;
-    document.getElementById('navGuest').style.display = 'none';
-    const nu = document.getElementById('navUser');
-    nu.style.display = 'flex';
-    const av = document.getElementById('navAv');
-    if(currentUser.photo){
-      av.innerHTML = '<img src="'+currentUser.photo+'" style="width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid var(--blue);cursor:pointer" onclick="showPage(\'dashboard\')"/>';
-    } else {
-      av.textContent = currentUser.name ? currentUser.name[0].toUpperCase() : 'U';
-    }
-  }
-
-  // ── Load Dashboard ──
-  window.loadDashboard = async function(){
-    if(!currentUser) return;
-    document.getElementById('dashName').textContent = currentUser.name || 'User';
-    document.getElementById('dashEmail').textContent = currentUser.email || '';
-    document.getElementById('dashRole').textContent = currentUser.role === 'client' ? '💼 Client' : '🧑‍💻 Freelancer';
-    const av = document.getElementById('dashAv');
-    if(currentUser.photo){
-      av.innerHTML = '<img src="'+currentUser.photo+'" class="dash-av"/>';
-    } else {
-      av.textContent = (currentUser.name||'U')[0].toUpperCase();
-    }
-    document.getElementById('profileName').value = currentUser.name || '';
-    document.getElementById('profileSkill').value = currentUser.skill || '';
-    document.getElementById('profileBio').value = currentUser.bio || '';
-    document.getElementById('profileRate').value = currentUser.rate || '';
-    loadMyJobs();
-  }
-
-  // ── Post Job ──
-  window.postJob = async function(){
-    if(!currentUser){ showToast('Please log in first'); return; }
-    const title = document.getElementById('jobTitle').value.trim();
-    const budget = document.getElementById('jobBudget').value.trim();
-    const desc = document.getElementById('jobDesc').value.trim();
-    const skills = document.getElementById('jobSkills').value.trim();
-    const category = document.getElementById('jobCategory').value;
-    if(!title||!budget||!desc){ showToast('Please fill all fields'); return; }
-
-    const btn = document.getElementById('postJobBtn');
-    btn.disabled = true; btn.innerHTML = '<span class="loading"></span>Posting...';
-
-    try {
-      await addDoc(collection(db, 'jobs'), {
-        title, budget, desc, category,
-        skills: skills.split(',').map(s=>s.trim()).filter(Boolean),
-        postedBy: currentUser.uid,
-        posterName: currentUser.name,
-        posterEmail: currentUser.email,
-        createdAt: serverTimestamp()
-      });
-      closeModal('postJobModal');
-      showToast('✅ Job posted successfully!');
-      loadMyJobs();
-      document.getElementById('statJobs').textContent = parseInt(document.getElementById('statJobs').textContent||0)+1;
+      showToast('✅ Profile photo updated!');
     } catch(err){ showToast('Error: '+err.message); }
-    btn.disabled=false; btn.innerHTML='Post Job';
-  }
+  };
+  reader.readAsDataURL(file);
+});
 
-  // ── Load My Jobs ──
-  async function loadMyJobs(){
-    if(!currentUser) return;
-    const q = query(collection(db,'jobs'), where('postedBy','==',currentUser.uid));
-    const snap = await getDocs(q);
-    const jobs = [];
-    snap.forEach(d => jobs.push({id:d.id,...d.data()}));
-    document.getElementById('statJobs').textContent = jobs.length;
+// ── Auth Tab Switch ────────────────────────────────────────────
+window.switchAuthTab = function(tab){
+  document.getElementById('signupView').style.display = tab==='signup' ? 'block' : 'none';
+  document.getElementById('loginView').style.display = tab==='login' ? 'block' : 'none';
+  document.getElementById('tabSignup').classList.toggle('active', tab==='signup');
+  document.getElementById('tabLogin').classList.toggle('active', tab==='login');
+};
 
-    const html = jobs.length === 0
-      ? '<p style="color:var(--muted);font-size:13px">No jobs posted yet. Click "Post a Job" to get started!</p>'
-      : jobs.map(j=>`
-        <div class="job-card">
-          <div class="job-top"><span class="job-title">${j.title}</span><span class="job-budget">${j.budget}</span></div>
-          <p class="job-desc">${j.desc}</p>
-          <div class="tags">${(j.skills||[]).map(s=>`<span class="tag">${s}</span>`).join('')}</div>
-        </div>`).join('');
-
-    document.getElementById('myJobsList').innerHTML = html;
-    document.getElementById('overviewJobs').innerHTML = jobs.length > 0
-      ? '<div class="sec-title" style="margin-bottom:12px">Your recent jobs</div>'+html
-      : '';
-  }
-
-  // ── Save Profile ──
-  window.saveProfile = async function(){
-    if(!currentUser) return;
-    const updates = {
-      name: document.getElementById('profileName').value.trim(),
-      skill: document.getElementById('profileSkill').value.trim(),
-      bio: document.getElementById('profileBio').value.trim(),
-      rate: document.getElementById('profileRate').value.trim()
+// ── Create Account ─────────────────────────────────────────────
+document.getElementById('joinBtn').addEventListener('click', async function(){
+  const name = document.getElementById('nameInput').value.trim();
+  let valid = true;
+  document.getElementById('nameError').style.display='none';
+  document.getElementById('gmailError').style.display='none';
+  if(!name){ document.getElementById('nameError').style.display='block'; valid=false; }
+  if(!gmailConnected){ document.getElementById('gmailError').style.display='block'; valid=false; }
+  if(!valid) return;
+  this.disabled=true; this.innerHTML='<span class="loading"></span>Creating account...';
+  try {
+    const uid = googleUserInfo.sub;
+    // Check if already exists
+    const existing = await getDoc(doc(db,'users',uid));
+    const userData = {
+      uid, name,
+      email: googleUserInfo.email,
+      photo: googleUserInfo.picture||'',
+      role: document.getElementById('roleInput').value,
+      skill: document.getElementById('skillInput').value,
+      bio:'', rate:'', tags:[], location:'', portfolio:'',
+      verified: false,
+      createdAt: serverTimestamp()
     };
-    await setDoc(doc(db,'users',currentUser.uid), updates, {merge:true});
-    Object.assign(currentUser, updates);
-    document.getElementById('dashName').textContent = updates.name;
-    showToast('✅ Profile saved!');
+    if(!existing.exists()) await setDoc(doc(db,'users',uid), userData);
+    currentUser = existing.exists() ? {...existing.data(), uid} : userData;
+    updateNavUI();
+    document.getElementById('welcome-msg').textContent = 'Welcome, '+currentUser.name+'!';
+    document.getElementById('form-view').style.display='none';
+    document.getElementById('success-view').style.display='flex';
+    loadDashboard();
+    showToast('🎉 Account created successfully!');
+    loadNotifs();
+  } catch(err){ showToast('Error: '+err.message); }
+  this.disabled=false; this.innerHTML='Create my account';
+});
+
+// ── Login ──────────────────────────────────────────────────────
+document.getElementById('loginBtn').addEventListener('click', async function(){
+  if(!loginGmailConnected){ document.getElementById('loginError').style.display='block'; document.getElementById('loginError').textContent='Please connect your Gmail first.'; return; }
+  this.disabled=true; this.innerHTML='<span class="loading"></span>Logging in...';
+  try {
+    const uid = loginGoogleInfo.sub;
+    const snap = await getDoc(doc(db,'users',uid));
+    if(!snap.exists()){
+      document.getElementById('loginError').style.display='block';
+      document.getElementById('loginError').textContent='No account found. Please sign up.';
+      this.disabled=false; this.innerHTML='Log In'; return;
+    }
+    currentUser = {...snap.data(), uid};
+    updateNavUI();
+    showToast('👋 Welcome back, '+currentUser.name+'!');
+    showPage('dashboard');
+    loadNotifs();
+  } catch(err){ showToast('Error: '+err.message); }
+  this.disabled=false; this.innerHTML='Log In';
+});
+
+// ── Logout ─────────────────────────────────────────────────────
+window.doLogout = function(){
+  currentUser = null; gmailConnected = false; loginGmailConnected = false;
+  googleUserInfo = null; loginGoogleInfo = null;
+  if(notifsUnsub){ notifsUnsub(); notifsUnsub=null; }
+  if(messageUnsub){ messageUnsub(); messageUnsub=null; }
+  document.getElementById('navGuest').style.display='flex';
+  document.getElementById('navUser').style.display='none';
+  document.getElementById('mobileUser').style.display='none';
+  document.getElementById('mobileGuest').style.display='block';
+  document.getElementById('notifBadge').style.display='none';
+  // reset signup form
+  document.getElementById('form-view').style.display='block';
+  document.getElementById('success-view').style.display='none';
+  gmailConnected=false;
+  document.getElementById('gmailText').textContent='Connect your Gmail';
+  document.getElementById('gmailBadge').style.display='none';
+  showPage('home');
+  showToast('👋 Logged out successfully');
+};
+
+// ── Update Nav ─────────────────────────────────────────────────
+function updateNavUI(){
+  if(!currentUser) return;
+  document.getElementById('navGuest').style.display='none';
+  document.getElementById('navUser').style.display='flex';
+  document.getElementById('mobileGuest').style.display='none';
+  document.getElementById('mobileUser').style.display='flex';
+  const av = document.getElementById('navAv');
+  if(currentUser.photo) av.innerHTML='<img src="'+currentUser.photo+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%"/>';
+  else av.textContent = (currentUser.name||'U')[0].toUpperCase();
+}
+
+// ── Mobile Menu ────────────────────────────────────────────────
+window.toggleMobileMenu = function(){
+  document.getElementById('mobileMenu').classList.toggle('open');
+};
+window.closeMobileMenu = function(){
+  document.getElementById('mobileMenu').classList.remove('open');
+};
+
+// ── Show Page ──────────────────────────────────────────────────
+window.showPage = function(name){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const pg = document.getElementById('page-'+name);
+  if(pg) pg.classList.add('active');
+  window.scrollTo(0,0);
+  if(name==='dashboard') loadDashboard();
+  if(name==='chat') loadContacts();
+  if(name==='browse') loadFreelancers();
+  if(name==='home') loadHomeJobs();
+};
+
+// ── Load Home Jobs ─────────────────────────────────────────────
+async function loadHomeJobs(){
+  try {
+    const q = query(collection(db,'jobs'), orderBy('createdAt','desc'), limit(8));
+    const snap = await getDocs(q);
+    allJobs = [];
+    snap.forEach(d=>allJobs.push({id:d.id,...d.data()}));
+    renderHomeJobs(allJobs);
+    loadHomeFreelancers();
+  } catch(e){ renderHomeJobs(staticJobs()); }
+}
+
+function renderHomeJobs(jobs){
+  const grid = document.getElementById('jobsGrid');
+  if(!jobs.length){ grid.innerHTML='<p style="color:var(--muted);padding:20px">No jobs posted yet. Be the first!</p>'; return; }
+  grid.innerHTML = jobs.map(j=>jobCardHTML(j,true)).join('');
+}
+
+async function loadHomeFreelancers(){
+  try {
+    const q = query(collection(db,'users'), where('role','==','freelancer'), orderBy('createdAt','desc'), limit(4));
+    const snap = await getDocs(q);
+    const users = [];
+    snap.forEach(d=>users.push({id:d.id,...d.data()}));
+    document.getElementById('homeFreelancers').innerHTML = users.length
+      ? users.map(u=>freelancerCardHTML(u)).join('')
+      : staticFreelancers().map(u=>freelancerCardHTML(u)).join('');
+  } catch(e){
+    document.getElementById('homeFreelancers').innerHTML = staticFreelancers().map(u=>freelancerCardHTML(u)).join('');
   }
+}
 
-  // ── CHAT ──
-  window.openChat = async function(otherUid, otherName){
-    if(!currentUser){ showToast('Please log in'); return; }
-    currentChatWith = {uid: otherUid, name: otherName};
-    const chatId = [currentUser.uid, otherUid].sort().join('_');
-    currentChatId = chatId;
+function staticJobs(){
+  return [
+    {id:'s1',title:'Logo design for tech startup',budget:'$20–$50',desc:'Need a clean modern logo. Simple, bold and memorable.',skills:['Logo','Illustrator','Branding'],posterName:'James K.',posterLocation:'USA',status:'open'},
+    {id:'s2',title:'WordPress site setup',budget:'$30–$80',desc:'Set up a blog with theme, plugins and 3 sample posts.',skills:['WordPress','HTML','CSS'],posterName:'Sara A.',posterLocation:'UK',status:'open'},
+    {id:'s3',title:'Instagram Reels editing x5',budget:'$15–$40',desc:'Edit 5 short videos with captions, transitions and music.',skills:['Video','Reels','CapCut'],posterName:'Maria R.',posterLocation:'Canada',status:'open'},
+    {id:'s4',title:'Python script for data scraping',budget:'$40–$100',desc:'Build a scraper to extract product data from e-commerce sites.',skills:['Python','Scrapy','Data'],posterName:'Li K.',posterLocation:'Singapore',status:'open'},
+  ];
+}
 
-    document.getElementById('chatWithName').textContent = otherName;
-    document.getElementById('chatNoSelect').style.display = 'none';
-    document.getElementById('chatActive').style.display = 'flex';
+function staticFreelancers(){
+  return [
+    {uid:'sf1',name:'Ali Hassan',skill:'Graphic Designer',location:'Pakistan',rate:'From $10/project',photo:''},
+    {uid:'sf2',name:'Fatima Noor',skill:'Content Writer',location:'India',rate:'From $8/article',photo:''},
+    {uid:'sf3',name:'Zaid Khan',skill:'Web Developer',location:'Pakistan',rate:'From $25/project',photo:''},
+    {uid:'sf4',name:'Lena M.',skill:'Video Editor',location:'Nigeria',rate:'From $12/video',photo:''},
+  ];
+}
 
-    if(messageUnsub) messageUnsub();
-    const msgsRef = collection(db, 'chats', chatId, 'messages');
-    const q = query(msgsRef, orderBy('createdAt'));
-    messageUnsub = onSnapshot(q, snap => {
-      const container = document.getElementById('chatMessages');
-      container.innerHTML = '';
-      snap.forEach(d => {
-        const m = d.data();
-        const isMine = m.senderId === currentUser.uid;
-        const div = document.createElement('div');
-        div.className = 'msg-bubble ' + (isMine ? 'sent' : 'recv');
-        div.innerHTML = m.text + '<div class="msg-time">' + (m.createdAt ? new Date(m.createdAt.toDate()).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}) : '') + '</div>';
-        container.appendChild(div);
-      });
-      container.scrollTop = container.scrollHeight;
-    });
-    showPage('chat');
-  }
+// ── Job Card HTML ──────────────────────────────────────────────
+function jobCardHTML(j, withApply=true){
+  const avLetters = (j.posterName||'?').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+  const statusBadge = j.status && j.status!=='open'
+    ? `<span class="job-status-badge ${j.status}">${j.status}</span>` : '';
+  return `<div class="job-card" onclick="openJobDetail('${j.id||''}')">
+    <div class="job-top">
+      <span class="job-title">${esc(j.title)}</span>
+      <span class="job-budget">${esc(j.budget)}</span>
+    </div>
+    ${statusBadge}
+    <p class="job-desc">${esc(j.desc||'').slice(0,120)}${(j.desc||'').length>120?'…':''}</p>
+    <div class="tags">${(j.skills||[]).map(s=>`<span class="tag">${esc(s)}</span>`).join('')}</div>
+    <div class="job-footer">
+      <div class="poster">
+        <div class="av">${avLetters}</div>
+        <span class="poster-name">${esc(j.posterName||'Unknown')}${j.posterLocation?` · ${esc(j.posterLocation)}`:''}${j.deadline?` · Due ${esc(j.deadline)}`:''}
+        </span>
+      </div>
+      ${withApply&&(!j.status||j.status==='open')?`<button class="apply-btn" onclick="event.stopPropagation();openApplyModal('${j.id||''}','${esc(j.title||'')}','${j.postedBy||''}')">Apply free</button>`:''}
+    </div>
+  </div>`;
+}
 
-  window.sendMessage = async function(){
-    const input = document.getElementById('chatInput');
-    const text = input.value.trim();
-    if(!text || !currentChatId) return;
-    input.value = '';
-    await addDoc(collection(db,'chats',currentChatId,'messages'), {
-      text,
-      senderId: currentUser.uid,
-      senderName: currentUser.name,
+// ── Freelancer Card HTML ───────────────────────────────────────
+function freelancerCardHTML(u, extraClass=''){
+  const initials = (u.name||'U').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+  const avContent = u.photo ? `<img src="${u.photo}" style="width:100%;height:100%;object-fit:cover;border-radius:50%"/>` : initials;
+  const stars = '★'.repeat(Math.round(u.avgRating||5))+'☆'.repeat(5-Math.round(u.avgRating||5));
+  return `<div class="fl-card ${extraClass}" onclick="openPublicProfile('${u.uid||u.id||''}')">
+    <div class="fl-av">${avContent}</div>
+    <div class="new-pill">New talent</div>
+    <div class="fl-name">${esc(u.name||'Unknown')}${u.verified?'<span class="verified">✓ Verified</span>':''}</div>
+    <div class="fl-role">${esc(u.skill||'Freelancer')}${u.location?` · ${esc(u.location)}`:''}
+    </div>
+    <div class="fl-rate">${esc(u.rate||'Rate TBD')}</div>
+    <div class="fl-stars">${stars}</div>
+    <button class="msg-btn" onclick="event.stopPropagation();msgFreelancer('${u.uid||u.id||''}','${esc(u.name||'')}')">💬 Message free</button>
+  </div>`;
+}
+
+// ── Open Job Detail ────────────────────────────────────────────
+window.openJobDetail = async function(jobId){
+  if(!jobId||jobId.startsWith('s')){ showToast('This is a sample job.'); return; }
+  showPage('job-detail');
+  const content = document.getElementById('jobDetailContent');
+  content.innerHTML = '<div style="text-align:center;padding:60px;color:var(--muted)"><span class="loading"></span> Loading...</div>';
+  try {
+    const snap = await getDoc(doc(db,'jobs',jobId));
+    if(!snap.exists()){ content.innerHTML='<p style="color:var(--muted);padding:24px">Job not found.</p>'; return; }
+    const j = {id:snap.id,...snap.data()};
+    const posterSnap = await getDoc(doc(db,'users',j.postedBy));
+    const poster = posterSnap.exists() ? posterSnap.data() : null;
+    const initials = (j.posterName||'?').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+    const canApply = currentUser && currentUser.uid !== j.postedBy && (!j.status||j.status==='open') && currentUser.role==='freelancer';
+
+    content.innerHTML = `
+      <button onclick="history.back()||showPage('home')" class="btn-ghost" style="margin-bottom:20px;font-size:13px">← Back</button>
+      <div class="job-detail-header">
+        <h1>${esc(j.title)}</h1>
+        <div class="job-detail-meta">
+          <span class="meta-badge">💰 ${esc(j.budget)}</span>
+          <span class="meta-badge">🏷️ ${esc(j.category||'General')}</span>
+          ${j.deadline?`<span class="meta-badge">📅 Due ${esc(j.deadline)}</span>`:''}
+          <span class="job-status-badge ${j.status||'open'}" style="margin-left:0">${j.status||'open'}</span>
+        </div>
+        <p class="job-detail-desc">${esc(j.desc||'').replace(/\n/g,'<br>')}</p>
+        <div class="tags" style="margin-bottom:0">${(j.skills||[]).map(s=>`<span class="tag">${esc(s)}</span>`).join('')}</div>
+      </div>
+      ${poster?`<div class="job-detail-section">
+        <h3>Posted by</h3>
+        <div class="poster" style="cursor:pointer" onclick="openPublicProfile('${poster.uid}')">
+          <div class="av" style="width:44px;height:44px;font-size:14px">${poster.photo?`<img src="${poster.photo}" style="width:100%;height:100%;object-fit:cover;border-radius:50%"/>`:initials}</div>
+          <div><div style="font-size:14px;font-weight:700;color:#fff">${esc(poster.name)}</div>
+          <div style="font-size:12px;color:var(--muted)">${esc(poster.skill||'Client')}${poster.location?' · '+esc(poster.location):''}</div></div>
+        </div>
+      </div>`:''}
+      ${canApply?`<div class="job-detail-section apply-form">
+        <h3>Apply for this job</h3>
+        <textarea id="inlineApplyCover" placeholder="Write your cover letter..."></textarea>
+        <input type="text" id="inlineApplyRate" placeholder="Your rate for this job (e.g. $30 fixed)" class="field input" style="background:#0d0d18;border:1px solid var(--border);color:#fff;border-radius:9px;padding:11px 14px;font-size:14px;width:100%;font-family:var(--font);margin-bottom:12px"/>
+        <button class="join-btn" style="max-width:200px" onclick="submitInlineApplication('${j.id}','${esc(j.title||'')}','${j.postedBy}')">Submit Application</button>
+      </div>`:''}
+    `;
+  } catch(e){ content.innerHTML='<p style="color:var(--red);padding:24px">Error loading job: '+e.message+'</p>'; }
+};
+
+window.submitInlineApplication = function(jobId, jobTitle, posterUid){
+  const cover = document.getElementById('inlineApplyCover').value.trim();
+  const rate = document.getElementById('inlineApplyRate').value.trim();
+  actuallySubmitApplication(jobId, jobTitle, posterUid, cover, rate);
+};
+
+// ── Open Apply Modal ───────────────────────────────────────────
+window.openApplyModal = function(jobId, jobTitle, posterUid){
+  if(!currentUser){ showToast('Please log in to apply'); showPage('login'); return; }
+  if(currentUser.role==='client'){ showToast('Only freelancers can apply to jobs'); return; }
+  document.getElementById('applyJobId').value = jobId;
+  document.getElementById('applyJobPoster').value = posterUid;
+  document.getElementById('applyJobTitle').textContent = jobTitle;
+  document.getElementById('applyCover').value='';
+  document.getElementById('applyRate').value='';
+  openModal('applyModal');
+};
+
+window.submitApplication = function(){
+  const jobId = document.getElementById('applyJobId').value;
+  const posterUid = document.getElementById('applyJobPoster').value;
+  const jobTitle = document.getElementById('applyJobTitle').textContent;
+  const cover = document.getElementById('applyCover').value.trim();
+  const rate = document.getElementById('applyRate').value.trim();
+  actuallySubmitApplication(jobId, jobTitle, posterUid, cover, rate);
+};
+
+async function actuallySubmitApplication(jobId, jobTitle, posterUid, cover, rate){
+  if(!currentUser){ showToast('Please log in'); return; }
+  if(!cover){ showToast('Please write a cover letter'); return; }
+  try {
+    // Check for duplicate application
+    const dupQ = query(collection(db,'applications'), where('jobId','==',jobId), where('applicantUid','==',currentUser.uid));
+    const dupSnap = await getDocs(dupQ);
+    if(!dupSnap.empty){ showToast('You already applied to this job!'); closeModal('applyModal'); return; }
+
+    await addDoc(collection(db,'applications'),{
+      jobId, jobTitle,
+      applicantUid: currentUser.uid,
+      applicantName: currentUser.name,
+      applicantSkill: currentUser.skill||'',
+      applicantPhoto: currentUser.photo||'',
+      posterUid, cover, rate,
+      status: 'pending',
       createdAt: serverTimestamp()
     });
-    await setDoc(doc(db,'chats',currentChatId), {
-      participants: [currentUser.uid, currentChatWith.uid],
-      lastMessage: text,
-      lastAt: serverTimestamp()
-    }, {merge:true});
-  }
+    await sendNotification(posterUid,'job_apply',`${currentUser.name} applied for "${jobTitle}"`,jobId);
+    closeModal('applyModal');
+    showToast('✅ Application submitted!');
+  } catch(e){ showToast('Error: '+e.message); }
+}
 
+// ── Open Public Profile ────────────────────────────────────────
+window.openPublicProfile = async function(uid){
+  if(!uid||uid.startsWith('s')){ showToast('Sample profile — sign up to see real profiles!'); return; }
+  showPage('profile-view');
+  const content = document.getElementById('profileViewContent');
+  content.innerHTML='<div style="text-align:center;padding:60px;color:var(--muted)"><span class="loading"></span></div>';
+  try {
+    const snap = await getDoc(doc(db,'users',uid));
+    if(!snap.exists()){ content.innerHTML='<p style="color:var(--muted);padding:24px">Profile not found.</p>'; return; }
+    const u = snap.data();
+    const initials = (u.name||'U').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+    const avHtml = u.photo?`<img src="${u.photo}"/>`:`<span>${initials}</span>`;
 
-  // ── NOTIFICATIONS ──
-  let notifsUnsub = null;
+    // Load reviews
+    const revQ = query(collection(db,'reviews'), where('targetUid','==',uid), orderBy('createdAt','desc'), limit(10));
+    const revSnap = await getDocs(revQ);
+    const reviews = [];
+    revSnap.forEach(d=>reviews.push(d.data()));
+    const avgRating = reviews.length ? (reviews.reduce((a,r)=>a+(r.rating||5),0)/reviews.length).toFixed(1) : null;
+    const stars = avgRating ? '★'.repeat(Math.round(avgRating))+'☆'.repeat(5-Math.round(avgRating)) : '★★★★★';
 
-  function toggleNotifDropdown(){
-    const dd = document.getElementById('notifDropdown');
-    dd.classList.toggle('open');
-    if(dd.classList.contains('open') && currentUser) loadNotifs();
-    // close when clicking outside
-    if(dd.classList.contains('open')){
-      setTimeout(()=>{
-        document.addEventListener('click', closeNotifOutside);
-      }, 100);
-    }
-  }
+    const isOwnProfile = currentUser && currentUser.uid === uid;
+    const canMsg = currentUser && currentUser.uid !== uid;
+    const canReview = currentUser && currentUser.uid !== uid;
 
-  function closeNotifOutside(e){
-    const dd = document.getElementById('notifDropdown');
-    const bell = document.getElementById('notifBell');
-    if(!dd.contains(e.target) && !bell.contains(e.target)){
-      dd.classList.remove('open');
-      document.removeEventListener('click', closeNotifOutside);
-    }
-  }
-
-  function loadNotifs(){
-    if(!currentUser) return;
-    const q = query(
-      collection(db, 'notifications'),
-      where('toUid', '==', currentUser.uid),
-      orderBy('createdAt', 'desc')
-    );
-    if(notifsUnsub) notifsUnsub();
-    notifsUnsub = onSnapshot(q, snap => {
-      const list = document.getElementById('notifList');
-      const badge = document.getElementById('notifBadge');
-      const notifs = [];
-      snap.forEach(d => notifs.push({id: d.id, ...d.data()}));
-      const unread = notifs.filter(n => !n.read).length;
-      if(unread > 0){
-        badge.style.display = 'block';
-        badge.textContent = unread > 9 ? '9+' : unread;
-      } else {
-        badge.style.display = 'none';
-      }
-      if(notifs.length === 0){
-        list.innerHTML = '<div class="notif-empty">🔔 No notifications yet</div>';
-        return;
-      }
-      list.innerHTML = notifs.map(n => `
-        <div class="notif-item ${n.read ? '' : 'unread'}" onclick="handleNotifClick('${n.id}','${n.type}','${n.refId||''}')">
-          <div class="notif-icon">${getNotifIcon(n.type)}</div>
-          <div class="notif-content">
-            <div class="notif-text">${n.text}</div>
-            <div class="notif-time">${n.createdAt ? timeAgo(n.createdAt.toDate()) : 'Just now'}</div>
+    content.innerHTML = `
+      <button onclick="history.back()||showPage('browse')" class="btn-ghost" style="margin-bottom:20px">← Back</button>
+      <div class="profile-hero">
+        <div class="profile-av-lg">${avHtml}</div>
+        <div class="profile-info">
+          <h1>${esc(u.name||'Unknown')}${u.verified?'<span class="verified">✓ Verified</span>':''}</h1>
+          <div class="role">${esc(u.skill||'Freelancer')}${u.location?' · '+esc(u.location):''}</div>
+          ${avgRating?`<div style="color:var(--yellow);font-size:14px;margin-bottom:4px">${stars} <span style="color:var(--muted);font-size:12px">${avgRating}/5 (${reviews.length} review${reviews.length!==1?'s':''})</span></div>`:''}
+          ${u.rate?`<div class="rate">${esc(u.rate)}</div>`:''}
+          ${u.bio?`<div class="bio">${esc(u.bio).replace(/\n/g,'<br>')}</div>`:''}
+          <div class="profile-actions">
+            ${canMsg?`<button class="btn-blue" onclick="msgFreelancer('${uid}','${esc(u.name||'')}')">💬 Message</button>`:''}
+            ${canReview?`<button class="btn-ghost" onclick="openReviewModal('${uid}','${esc(u.name||'')}')">⭐ Leave Review</button>`:''}
+            ${canMsg?`<button class="btn-ghost" onclick="openReportModal('${uid}')" style="color:var(--muted);font-size:12px">⚑ Report</button>`:''}
           </div>
-          ${!n.read ? '<div class="notif-dot"></div>' : ''}
-        </div>`).join('');
+        </div>
+      </div>
+      ${(u.tags||[]).length?`<div class="profile-section"><h3>Skills</h3><div class="skill-chips">${(u.tags||[]).map(t=>`<span class="skill-chip">${esc(t)}</span>`).join('')}</div></div>`:''}
+      ${u.portfolio?`<div class="profile-section"><h3>Portfolio</h3><a href="${u.portfolio}" target="_blank" class="btn-blue" style="display:inline-block;text-decoration:none">🔗 View Portfolio</a></div>`:''}
+      <div class="profile-section">
+        <h3>Reviews ${reviews.length?`(${reviews.length})`:'(0)'}</h3>
+        ${reviews.length?reviews.map(r=>`<div class="review-item">
+          <div class="stars">${'★'.repeat(r.rating||5)}</div>
+          <div class="text">${esc(r.text||'')}</div>
+          <div class="reviewer">— ${esc(r.reviewerName||'Anonymous')} · ${r.createdAt?timeAgo(r.createdAt.toDate()):''}</div>
+        </div>`).join(''):'<p style="color:var(--muted);font-size:13px">No reviews yet.</p>'}
+      </div>
+    `;
+  } catch(e){ content.innerHTML='<p style="color:var(--red);padding:24px">'+e.message+'</p>'; }
+};
+
+// ── Review Modal ───────────────────────────────────────────────
+window.openReviewModal = function(uid, name){
+  selectedStars=0; setStars(0);
+  document.getElementById('reviewTargetUid').value=uid;
+  document.getElementById('reviewTargetName').textContent='Reviewing: '+name;
+  document.getElementById('reviewText').value='';
+  openModal('reviewModal');
+};
+window.setStars = function(n){
+  selectedStars=n;
+  document.querySelectorAll('.star-btn').forEach(b=>b.classList.toggle('lit',parseInt(b.dataset.v)<=n));
+};
+window.submitReview = async function(){
+  const uid = document.getElementById('reviewTargetUid').value;
+  const text = document.getElementById('reviewText').value.trim();
+  if(!selectedStars){ showToast('Please select a rating'); return; }
+  if(!text){ showToast('Please write a review'); return; }
+  if(!currentUser){ showToast('Please log in'); return; }
+  try {
+    await addDoc(collection(db,'reviews'),{
+      targetUid:uid, reviewerUid:currentUser.uid, reviewerName:currentUser.name,
+      rating:selectedStars, text, createdAt:serverTimestamp()
     });
-  }
+    await sendNotification(uid,'review',`${currentUser.name} left you a ${selectedStars}★ review`);
+    closeModal('reviewModal');
+    showToast('⭐ Review submitted!');
+    openPublicProfile(uid);
+  } catch(e){ showToast('Error: '+e.message); }
+};
 
-  function getNotifIcon(type){
-    const icons = {
-      message: '💬', job_apply: '📋', job_accepted: '✅',
-      job_posted: '💼', review: '⭐', order: '🆔', default: '🔔'
-    };
-    return icons[type] || icons.default;
-  }
-
-  async function handleNotifClick(notifId, type, refId){
-    // mark as read
-    await setDoc(doc(db, 'notifications', notifId), {read: true}, {merge: true});
-    // navigate
-    if(type === 'message') { showPage('chat'); }
-    else if(type === 'job_apply' || type === 'job_posted') { showPage('dashboard'); switchTab('myjobs'); }
-    else { showPage('dashboard'); }
-    document.getElementById('notifDropdown').classList.remove('open');
-  }
-
-  async function clearAllNotifs(){
-    if(!currentUser) return;
-    const q = query(collection(db,'notifications'), where('toUid','==',currentUser.uid), where('read','==',false));
-    const snap = await getDocs(q);
-    const promises = [];
-    snap.forEach(d => promises.push(setDoc(doc(db,'notifications',d.id), {read:true}, {merge:true})));
-    await Promise.all(promises);
-    showToast('✅ All notifications marked as read');
-  }
-
-  window.sendNotification = async function(toUid, type, text, refId=''){
-    if(!toUid || toUid === currentUser.uid) return;
-    await addDoc(collection(db,'notifications'), {
-      toUid, type, text, refId,
-      read: false,
-      createdAt: serverTimestamp()
+// ── Report Modal ────────────────────────────────────────────────
+window.openReportModal = function(uid){
+  document.getElementById('reportTargetUid').value=uid;
+  document.getElementById('reportDetails').value='';
+  openModal('reportModal');
+};
+window.submitReport = async function(){
+  const uid = document.getElementById('reportTargetUid').value;
+  const reason = document.querySelector('input[name="reportReason"]:checked')?.value;
+  const details = document.getElementById('reportDetails').value.trim();
+  if(!reason){ showToast('Please select a reason'); return; }
+  if(!currentUser){ showToast('Please log in'); return; }
+  try {
+    await addDoc(collection(db,'reports'),{
+      reportedUid:uid, reporterUid:currentUser.uid, reason, details, createdAt:serverTimestamp()
     });
-  }
+    closeModal('reportModal');
+    showToast('✅ Report submitted. Our team will review it.');
+  } catch(e){ showToast('Error: '+e.message); }
+};
 
-  function timeAgo(date){
-    const seconds = Math.floor((new Date() - date) / 1000);
-    if(seconds < 60) return 'Just now';
-    if(seconds < 3600) return Math.floor(seconds/60) + 'm ago';
-    if(seconds < 86400) return Math.floor(seconds/3600) + 'h ago';
-    return Math.floor(seconds/86400) + 'd ago';
+// ── Load Dashboard ─────────────────────────────────────────────
+window.loadDashboard = async function(){
+  if(!currentUser) return;
+  document.getElementById('dashName').textContent = currentUser.name||'User';
+  document.getElementById('dashEmail').textContent = currentUser.email||'';
+  document.getElementById('dashRoleBadge').textContent = currentUser.role==='client'?'💼 Client':'🧑‍💻 Freelancer';
+  const av = document.getElementById('dashAv');
+  if(currentUser.photo){
+    av.innerHTML='<img src="'+currentUser.photo+'" class="dash-av"/>';
+    av.className='dash-av-wrap'; // reset to not show text class
+  } else {
+    av.textContent=(currentUser.name||'U')[0].toUpperCase();
+    av.className='dash-av-txt';
   }
+  document.getElementById('profileName').value=currentUser.name||'';
+  document.getElementById('profileSkill').value=currentUser.skill||'';
+  document.getElementById('profileBio').value=currentUser.bio||'';
+  document.getElementById('profileRate').value=currentUser.rate||'';
+  document.getElementById('profileTags').value=(currentUser.tags||[]).join(', ');
+  document.getElementById('profileLocation').value=currentUser.location||'';
+  document.getElementById('profilePortfolio').value=currentUser.portfolio||'';
+  loadMyJobs();
+  loadMyApplications();
+  loadMessageCount();
+};
 
-  // Start listening for notifs when user logs in
-  const _origUpdateNav = window.updateNavUI;
-  // ── Helper globals ──
-  window.showPage = function(name){
-    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-    document.getElementById('page-'+name).classList.add('active');
-    window.scrollTo(0,0);
-    if(name==='dashboard') loadDashboard();
-    if(name==='chat') loadContacts();
-  }
-
-  window.loadContacts = async function(){
-    if(!currentUser) return;
-    const q = query(collection(db,'chats'), where('participants','array-contains',currentUser.uid));
-    const snap = await getDocs(q);
-    const list = document.getElementById('contactsList');
-    if(snap.empty){ list.innerHTML='<div style="padding:20px;color:var(--muted);font-size:13px;text-align:center">No conversations yet.</div>'; return; }
-    list.innerHTML='';
-    snap.forEach(async d => {
-      const chat = d.data();
-      const otherId = chat.participants.find(p=>p!==currentUser.uid);
-      const userSnap = await getDoc(doc(db,'users',otherId));
-      const other = userSnap.exists() ? userSnap.data() : {name:'Unknown',uid:otherId};
-      const div = document.createElement('div');
-      div.className='chat-contact';
-      div.innerHTML=`<div class="chat-contact-av">${(other.name||'U')[0].toUpperCase()}</div><div class="chat-contact-info"><div class="chat-contact-name">${other.name||'Unknown'}</div><div class="chat-contact-preview">${chat.lastMessage||''}</div></div>`;
-      div.onclick=()=>openChat(other.uid, other.name);
-      list.appendChild(div);
+// ── Post Job ───────────────────────────────────────────────────
+window.postJob = async function(){
+  if(!currentUser){ showToast('Please log in first'); return; }
+  const title=document.getElementById('jobTitle').value.trim();
+  const budget=document.getElementById('jobBudget').value.trim();
+  const desc=document.getElementById('jobDesc').value.trim();
+  const skills=document.getElementById('jobSkills').value.trim();
+  const category=document.getElementById('jobCategory').value;
+  const deadline=document.getElementById('jobDeadline').value;
+  if(!title||!budget||!desc){ showToast('Please fill all required fields'); return; }
+  const btn=document.getElementById('postJobBtn');
+  btn.disabled=true; btn.innerHTML='<span class="loading"></span>Posting...';
+  try {
+    await addDoc(collection(db,'jobs'),{
+      title,budget,desc,category,
+      skills:skills.split(',').map(s=>s.trim()).filter(Boolean),
+      deadline:deadline||'',
+      postedBy:currentUser.uid,
+      posterName:currentUser.name,
+      posterEmail:currentUser.email,
+      posterLocation:currentUser.location||'',
+      status:'open',
+      createdAt:serverTimestamp()
     });
+    closeModal('postJobModal');
+    showToast('✅ Job posted!');
+    loadMyJobs();
+    loadHomeJobs();
+  } catch(e){ showToast('Error: '+e.message); }
+  btn.disabled=false; btn.innerHTML='Post Job';
+};
+
+// ── Load My Jobs ───────────────────────────────────────────────
+async function loadMyJobs(){
+  if(!currentUser) return;
+  const q=query(collection(db,'jobs'), where('postedBy','==',currentUser.uid));
+  const snap=await getDocs(q);
+  const jobs=[];
+  snap.forEach(d=>jobs.push({id:d.id,...d.data()}));
+  document.getElementById('statJobs').textContent=jobs.length;
+
+  if(!jobs.length){
+    const empty='<p style="color:var(--muted);font-size:13px">No jobs posted yet.</p>';
+    document.getElementById('myJobsList').innerHTML=empty;
+    document.getElementById('overviewJobs').innerHTML='';
+    return;
   }
 
-  window.requireLogin = function(){
-    if(!currentUser){ showToast('Please log in to continue'); showPage('login'); return; }
-    showToast('💬 Chat is available with real users who sign up on the platform!');
+  const html=jobs.map(j=>`
+    <div class="job-manage-card">
+      <div class="job-manage-top">
+        <div>
+          <div class="job-manage-title">${esc(j.title)}</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:4px">${esc(j.budget)} · ${esc(j.category||'General')}${j.deadline?' · Due '+esc(j.deadline):''}</div>
+        </div>
+        <span class="job-status-badge ${j.status||'open'}">${j.status||'open'}</span>
+      </div>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:12px">${esc(j.desc).slice(0,100)}…</p>
+      <div class="job-manage-actions">
+        <button class="btn-sm primary" onclick="openEditJobModal('${j.id}')">✏️ Edit</button>
+        <button class="btn-sm" onclick="toggleApplicants('${j.id}')">👥 View Applicants</button>
+        <button class="btn-sm danger" onclick="deleteJob('${j.id}')">🗑 Delete</button>
+      </div>
+      <div class="applicants-list" id="applicants-${j.id}">
+        <div style="color:var(--muted);font-size:13px">Loading applicants...</div>
+      </div>
+    </div>`).join('');
+
+  document.getElementById('myJobsList').innerHTML=html;
+  document.getElementById('overviewJobs').innerHTML=
+    '<div class="sec-title" style="margin-bottom:12px">Your recent jobs</div>'+
+    jobs.slice(0,3).map(j=>jobCardHTML(j,false)).join('');
+}
+
+window.openEditJobModal = function(jobId){
+  getDoc(doc(db,'jobs',jobId)).then(snap=>{
+    if(!snap.exists()) return;
+    const j=snap.data();
+    document.getElementById('editJobId').value=jobId;
+    document.getElementById('editJobTitle').value=j.title||'';
+    document.getElementById('editJobBudget').value=j.budget||'';
+    document.getElementById('editJobDesc').value=j.desc||'';
+    document.getElementById('editJobStatus').value=j.status||'open';
+    openModal('editJobModal');
+  });
+};
+
+window.saveEditJob = async function(){
+  const id=document.getElementById('editJobId').value;
+  const updates={
+    title:document.getElementById('editJobTitle').value.trim(),
+    budget:document.getElementById('editJobBudget').value.trim(),
+    desc:document.getElementById('editJobDesc').value.trim(),
+    status:document.getElementById('editJobStatus').value,
+  };
+  if(!updates.title||!updates.budget){ showToast('Fill all fields'); return; }
+  try {
+    await setDoc(doc(db,'jobs',id),updates,{merge:true});
+    closeModal('editJobModal');
+    showToast('✅ Job updated!');
+    loadMyJobs();
+  } catch(e){ showToast('Error: '+e.message); }
+};
+
+window.deleteJob = async function(jobId){
+  if(!confirm('Delete this job? This cannot be undone.')) return;
+  await deleteDoc(doc(db,'jobs',jobId));
+  showToast('🗑 Job deleted');
+  loadMyJobs();
+};
+
+window.toggleApplicants = async function(jobId){
+  const list=document.getElementById('applicants-'+jobId);
+  if(list.classList.contains('open')){ list.classList.remove('open'); return; }
+  list.classList.add('open');
+  list.innerHTML='<div style="color:var(--muted);font-size:13px"><span class="loading"></span> Loading applicants...</div>';
+  const q=query(collection(db,'applications'), where('jobId','==',jobId));
+  const snap=await getDocs(q);
+  const apps=[];
+  snap.forEach(d=>apps.push({id:d.id,...d.data()}));
+  if(!apps.length){ list.innerHTML='<p style="color:var(--muted);font-size:13px">No applicants yet.</p>'; return; }
+  list.innerHTML=apps.map(a=>`
+    <div class="applicant-row">
+      <div class="av">${a.applicantPhoto?`<img src="${a.applicantPhoto}" style="width:100%;height:100%;object-fit:cover;border-radius:50%"/>`:(a.applicantName||'?')[0].toUpperCase()}</div>
+      <div class="applicant-info">
+        <div class="applicant-name">${esc(a.applicantName||'Unknown')} <span style="font-size:11px;color:var(--muted)">· ${esc(a.status||'pending')}</span></div>
+        <div class="applicant-skill">${esc(a.cover||'').slice(0,80)}…</div>
+        ${a.rate?`<div style="font-size:11px;color:var(--blue-light)">Rate: ${esc(a.rate)}</div>`:''}
+      </div>
+      <div class="applicant-actions">
+        <button class="btn-sm" onclick="openPublicProfile('${a.applicantUid}')">Profile</button>
+        <button class="btn-sm primary" onclick="acceptApplicant('${a.id}','${a.applicantUid}','${esc(a.applicantName||'')}','${a.jobId}')">Accept</button>
+        <button class="btn-sm" onclick="msgFreelancer('${a.applicantUid}','${esc(a.applicantName||'')}')">Chat</button>
+      </div>
+    </div>`).join('');
+};
+
+window.acceptApplicant = async function(appId, applicantUid, applicantName, jobId){
+  await setDoc(doc(db,'applications',appId),{status:'accepted'},{merge:true});
+  await sendNotification(applicantUid,'job_accepted',`Your application was accepted! 🎉`,jobId);
+  showToast('✅ Applicant accepted! They have been notified.');
+  toggleApplicants(jobId); toggleApplicants(jobId); // refresh
+};
+
+// ── My Applications ────────────────────────────────────────────
+async function loadMyApplications(){
+  if(!currentUser) return;
+  const q=query(collection(db,'applications'),where('applicantUid','==',currentUser.uid),orderBy('createdAt','desc'));
+  try {
+    const snap=await getDocs(q);
+    const apps=[];
+    snap.forEach(d=>apps.push({id:d.id,...d.data()}));
+    document.getElementById('statApps').textContent=apps.length;
+    if(!apps.length){
+      document.getElementById('myApplicationsList').innerHTML='<p style="color:var(--muted);font-size:13px">No applications yet. Browse jobs to apply!</p>';
+      return;
+    }
+    document.getElementById('myApplicationsList').innerHTML=`
+      <div style="margin-bottom:16px;font-size:13px;color:var(--muted)">${apps.length} application${apps.length!==1?'s':''} submitted</div>`+
+      apps.map(a=>`<div class="job-manage-card">
+        <div class="job-manage-top">
+          <div>
+            <div class="job-manage-title">${esc(a.jobTitle||'Job')}</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:4px">${a.rate?'Rate: '+esc(a.rate)+' · ':''} Applied ${a.createdAt?timeAgo(a.createdAt.toDate()):''}</div>
+          </div>
+          <span class="job-status-badge ${a.status==='accepted'?'hired':a.status==='rejected'?'closed':'open'}">${a.status||'pending'}</span>
+        </div>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:8px">${esc(a.cover||'').slice(0,100)}…</p>
+      </div>`).join('');
+  } catch(e){ document.getElementById('myApplicationsList').innerHTML='<p style="color:var(--muted);font-size:13px">Could not load applications.</p>'; }
+}
+
+// ── Load Message Count ─────────────────────────────────────────
+async function loadMessageCount(){
+  if(!currentUser) return;
+  const q=query(collection(db,'chats'), where('participants','array-contains',currentUser.uid));
+  const snap=await getDocs(q);
+  document.getElementById('statMessages').textContent=snap.size;
+}
+
+// ── Save Profile ───────────────────────────────────────────────
+window.saveProfile = async function(){
+  if(!currentUser) return;
+  const updates={
+    name:document.getElementById('profileName').value.trim(),
+    skill:document.getElementById('profileSkill').value.trim(),
+    bio:document.getElementById('profileBio').value.trim(),
+    rate:document.getElementById('profileRate').value.trim(),
+    tags:document.getElementById('profileTags').value.split(',').map(s=>s.trim()).filter(Boolean),
+    location:document.getElementById('profileLocation').value.trim(),
+    portfolio:document.getElementById('profilePortfolio').value.trim(),
+  };
+  await setDoc(doc(db,'users',currentUser.uid),updates,{merge:true});
+  Object.assign(currentUser,updates);
+  document.getElementById('dashName').textContent=updates.name;
+  updateNavUI();
+  showToast('✅ Profile saved!');
+};
+
+// ── Load Freelancers (Browse) ──────────────────────────────────
+window.loadFreelancers = async function(){
+  const cat=document.getElementById('filterCategory')?.value||'';
+  const sort=document.getElementById('filterSort')?.value||'newest';
+  const grid=document.getElementById('freelancerGrid');
+  grid.innerHTML='<div class="skeleton" style="height:220px"></div>'.repeat(4);
+  try {
+    let q=query(collection(db,'users'), where('role','==','freelancer'));
+    const snap=await getDocs(q);
+    let users=[];
+    snap.forEach(d=>users.push({id:d.id,...d.data()}));
+    if(cat) users=users.filter(u=>u.skill&&u.skill.toLowerCase().includes(cat.toLowerCase()));
+    if(sort==='rating') users.sort((a,b)=>(b.avgRating||0)-(a.avgRating||0));
+    else if(sort==='newest') users.sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
+    grid.innerHTML=users.length
+      ? users.map(u=>freelancerCardHTML(u,'browse-card')).join('')
+      : staticFreelancers().map(u=>freelancerCardHTML(u,'browse-card')).join('');
+  } catch(e){
+    grid.innerHTML=staticFreelancers().map(u=>freelancerCardHTML(u,'browse-card')).join('');
   }
+};
 
-  window.setActive = function(el){
-    document.querySelectorAll('.cat').forEach(c=>c.classList.remove('active'));
-    el.classList.add('active');
+// ── Search ─────────────────────────────────────────────────────
+window.doSearch = async function(){
+  const q=document.getElementById('searchInput').value.trim();
+  if(!q){ showToast('Please enter a search term'); return; }
+  searchData.query=q;
+  showPage('search');
+  document.getElementById('searchHeading').textContent=`Results for "${q}"`;
+  document.getElementById('searchResultsGrid').innerHTML='<div class="skeleton"></div><div class="skeleton"></div>';
+  document.getElementById('searchFreelancers').innerHTML='<div class="skeleton" style="height:200px"></div>'.repeat(3);
+  try {
+    // Search jobs
+    const jobsSnap=await getDocs(collection(db,'jobs'));
+    searchData.jobs=[];
+    jobsSnap.forEach(d=>{
+      const j={id:d.id,...d.data()};
+      const qLow=q.toLowerCase();
+      if((j.title||'').toLowerCase().includes(qLow)||(j.desc||'').toLowerCase().includes(qLow)||(j.skills||[]).join(' ').toLowerCase().includes(qLow)||(j.category||'').toLowerCase().includes(qLow))
+        searchData.jobs.push(j);
+    });
+    // Search users
+    const usersSnap=await getDocs(collection(db,'users'));
+    searchData.users=[];
+    usersSnap.forEach(d=>{
+      const u={id:d.id,...d.data()};
+      const qLow=q.toLowerCase();
+      if(u.role==='freelancer'&&((u.name||'').toLowerCase().includes(qLow)||(u.skill||'').toLowerCase().includes(qLow)||(u.tags||[]).join(' ').toLowerCase().includes(qLow)))
+        searchData.users.push(u);
+    });
+    renderSearchResults();
+  } catch(e){
+    document.getElementById('searchResultsGrid').innerHTML='<p style="color:var(--muted)">Error searching: '+e.message+'</p>';
   }
+};
 
-  window.filterJobs = function(cat){ /* future: filter from Firestore */ }
+window.renderSearchResults = function(){
+  const sort=document.getElementById('searchSort')?.value||'newest';
+  let jobs=[...searchData.jobs];
+  if(sort==='newest') jobs.sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
+  else if(sort==='budget_high') jobs.sort((a,b)=>parseBudget(b.budget)-parseBudget(a.budget));
+  else jobs.sort((a,b)=>parseBudget(a.budget)-parseBudget(b.budget));
+  document.getElementById('resultsCount').innerHTML=`<strong>${jobs.length}</strong> jobs, <strong>${searchData.users.length}</strong> freelancers`;
+  document.getElementById('searchResultsGrid').innerHTML=jobs.length?jobs.map(j=>jobCardHTML(j,true)).join(''):
+    '<div class="no-results"><div class="no-results-icon">🔍</div><h3>No jobs found</h3><p style="color:var(--muted);font-size:13px">Try different keywords</p></div>';
+  document.getElementById('searchFreelancers').innerHTML=searchData.users.length?searchData.users.map(u=>freelancerCardHTML(u)).join(''):
+    '<p style="color:var(--muted);font-size:13px">No freelancers matched your search.</p>';
+};
 
-  window.doSearch = function(){
-    const q = document.getElementById('searchInput').value.trim();
-    if(q) showToast('Searching for: '+q+' (coming soon!)');
+function parseBudget(b){
+  if(!b) return 0;
+  const m=b.match(/\d+/);
+  return m?parseInt(m[0]):0;
+}
+
+// ── Filter Jobs (Home) ─────────────────────────────────────────
+window.filterJobs = async function(cat){
+  currentJobFilter=cat;
+  try {
+    let q = cat==='All'
+      ? query(collection(db,'jobs'), orderBy('createdAt','desc'), limit(8))
+      : query(collection(db,'jobs'), where('category','==',cat), orderBy('createdAt','desc'));
+    const snap=await getDocs(q);
+    const jobs=[];
+    snap.forEach(d=>jobs.push({id:d.id,...d.data()}));
+    renderHomeJobs(jobs.length?jobs:staticJobs().filter(j=>cat==='All'||j.category===cat));
+  } catch(e){ renderHomeJobs(staticJobs()); }
+};
+
+// ── Message Freelancer ─────────────────────────────────────────
+window.msgFreelancer = async function(uid, name){
+  if(!currentUser){ showToast('Please log in to send messages'); showPage('login'); return; }
+  if(uid===currentUser.uid){ showToast("You can't message yourself!"); return; }
+  await window.openChat(uid,name);
+};
+
+// ── CHAT ──────────────────────────────────────────────────────
+window.openChat = async function(otherUid, otherName, otherPhoto=''){
+  if(!currentUser){ showToast('Please log in'); return; }
+  currentChatWith={uid:otherUid,name:otherName,photo:otherPhoto};
+  const chatId=[currentUser.uid,otherUid].sort().join('_');
+  currentChatId=chatId;
+  document.getElementById('chatWithName').textContent=otherName;
+  const av=document.getElementById('chatWithAv');
+  if(otherPhoto) av.innerHTML=`<img src="${otherPhoto}" style="width:100%;height:100%;object-fit:cover;border-radius:50%"/>`;
+  else av.textContent=(otherName||'?')[0].toUpperCase();
+  document.getElementById('chatProfileBtn').onclick=()=>openPublicProfile(otherUid);
+  document.getElementById('chatNoSelect').style.display='none';
+  document.getElementById('chatActive').style.display='flex';
+  // Mobile: show chat thread
+  document.getElementById('chatSidebar').classList.add('hidden');
+  document.getElementById('chatMain').classList.add('visible');
+
+  if(messageUnsub) messageUnsub();
+  const msgsRef=collection(db,'chats',chatId,'messages');
+  const q=query(msgsRef, orderBy('createdAt'));
+  messageUnsub=onSnapshot(q, snap=>{
+    const container=document.getElementById('chatMessages');
+    const wasAtBottom=container.scrollHeight-container.scrollTop-container.clientHeight<60;
+    container.innerHTML='';
+    snap.forEach(d=>{
+      const m=d.data();
+      const isMine=m.senderId===currentUser.uid;
+      const div=document.createElement('div');
+      div.className='msg-bubble '+(isMine?'sent':'recv');
+      if(m.type==='image'){
+        div.innerHTML=`<img src="${m.imageUrl}" class="chat-img-msg" onclick="document.getElementById('imgPreviewSrc').src=this.src;openModal('imgPreviewModal')"/><div class="msg-time">${m.createdAt?fmtTime(m.createdAt.toDate()):''}</div>`;
+      } else {
+        div.innerHTML=esc(m.text||'').replace(/\n/g,'<br>')+`<div class="msg-time">${m.createdAt?fmtTime(m.createdAt.toDate()):''}</div>`;
+      }
+      container.appendChild(div);
+    });
+    if(wasAtBottom) container.scrollTop=container.scrollHeight;
+  });
+  showPage('chat');
+};
+
+window.closeChatThread = function(){
+  document.getElementById('chatSidebar').classList.remove('hidden');
+  document.getElementById('chatMain').classList.remove('visible');
+};
+
+window.sendMessage = async function(){
+  const input=document.getElementById('chatInput');
+  const text=input.value.trim();
+  if(!text||!currentChatId) return;
+  input.value=''; input.style.height='auto';
+  await addDoc(collection(db,'chats',currentChatId,'messages'),{
+    text, senderId:currentUser.uid, senderName:currentUser.name,
+    type:'text', createdAt:serverTimestamp()
+  });
+  await setDoc(doc(db,'chats',currentChatId),{
+    participants:[currentUser.uid,currentChatWith.uid],
+    lastMessage:text, lastAt:serverTimestamp()
+  },{merge:true});
+  await sendNotification(currentChatWith.uid,'message',`${currentUser.name}: ${text.slice(0,60)}`,currentChatId);
+};
+
+window.sendImageMessage = async function(){
+  const file=document.getElementById('chatFileInput').files[0];
+  if(!file||!currentChatId) return;
+  const reader=new FileReader();
+  reader.onload=async e=>{
+    try {
+      const b64=e.target.result;
+      await addDoc(collection(db,'chats',currentChatId,'messages'),{
+        imageUrl:b64, senderId:currentUser.uid, senderName:currentUser.name,
+        type:'image', createdAt:serverTimestamp()
+      });
+      await setDoc(doc(db,'chats',currentChatId),{
+        participants:[currentUser.uid,currentChatWith.uid],
+        lastMessage:'📷 Image', lastAt:serverTimestamp()
+      },{merge:true});
+    } catch(err){ showToast('Error sending image: '+err.message); }
+  };
+  reader.readAsDataURL(file);
+};
+
+window.chatKeyDown = function(e){
+  if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); sendMessage(); }
+};
+window.autoResizeTextarea = function(el){
+  el.style.height='auto'; el.style.height=Math.min(el.scrollHeight,120)+'px';
+};
+window.handleTyping = function(){
+  clearTimeout(typingTimeout);
+  typingTimeout=setTimeout(()=>{},1500);
+};
+
+window.filterContacts = function(){
+  const q=document.getElementById('chatSearchInput').value.toLowerCase();
+  document.querySelectorAll('.chat-contact').forEach(el=>{
+    el.style.display=el.querySelector('.chat-contact-name')?.textContent.toLowerCase().includes(q)?'':'none';
+  });
+};
+
+window.loadContacts = async function(){
+  if(!currentUser) return;
+  const q=query(collection(db,'chats'), where('participants','array-contains',currentUser.uid));
+  const snap=await getDocs(q);
+  const list=document.getElementById('contactsList');
+  if(snap.empty){ list.innerHTML='<div style="padding:20px;color:var(--muted);font-size:13px;text-align:center">No conversations yet.</div>'; return; }
+  list.innerHTML='';
+  snap.forEach(async d=>{
+    const chat=d.data();
+    const otherId=chat.participants.find(p=>p!==currentUser.uid);
+    if(!otherId) return;
+    const userSnap=await getDoc(doc(db,'users',otherId));
+    const other=userSnap.exists()?userSnap.data():{name:'Unknown',uid:otherId};
+    const div=document.createElement('div');
+    div.className='chat-contact';
+    const avContent=other.photo?`<img src="${other.photo}" style="width:100%;height:100%;object-fit:cover;border-radius:50%"/>`:(other.name||'U')[0].toUpperCase();
+    div.innerHTML=`<div class="chat-contact-av">${avContent}</div>
+      <div class="chat-contact-info">
+        <div class="chat-contact-name">${esc(other.name||'Unknown')}</div>
+        <div class="chat-contact-preview">${esc(chat.lastMessage||'Start a conversation')}</div>
+      </div>`;
+    div.onclick=()=>openChat(other.uid||otherId, other.name||'Unknown', other.photo||'');
+    list.appendChild(div);
+  });
+};
+
+// ── NOTIFICATIONS ─────────────────────────────────────────────
+window.toggleNotifDropdown=function(){
+  const dd=document.getElementById('notifDropdown');
+  dd.classList.toggle('open');
+  if(dd.classList.contains('open')&&currentUser) loadNotifs();
+  if(dd.classList.contains('open'))
+    setTimeout(()=>document.addEventListener('click',closeNotifOutside),100);
+};
+function closeNotifOutside(e){
+  const dd=document.getElementById('notifDropdown');
+  const bell=document.getElementById('notifBell');
+  if(!dd.contains(e.target)&&!bell.contains(e.target)){
+    dd.classList.remove('open');
+    document.removeEventListener('click',closeNotifOutside);
   }
+}
+function loadNotifs(){
+  if(!currentUser) return;
+  const q=query(collection(db,'notifications'),where('toUid','==',currentUser.uid),orderBy('createdAt','desc'));
+  if(notifsUnsub) notifsUnsub();
+  notifsUnsub=onSnapshot(q,snap=>{
+    const list=document.getElementById('notifList');
+    const badge=document.getElementById('notifBadge');
+    const notifs=[];
+    snap.forEach(d=>notifs.push({id:d.id,...d.data()}));
+    const unread=notifs.filter(n=>!n.read).length;
+    badge.style.display=unread>0?'block':'none';
+    badge.textContent=unread>9?'9+':unread;
+    if(!notifs.length){list.innerHTML='<div class="notif-empty">🔔 No notifications yet</div>';return;}
+    list.innerHTML=notifs.map(n=>`
+      <div class="notif-item ${n.read?'':'unread'}" onclick="handleNotifClick('${n.id}','${n.type}','${n.refId||''}')">
+        <div class="notif-icon">${getNotifIcon(n.type)}</div>
+        <div class="notif-content">
+          <div class="notif-text">${esc(n.text||'')}</div>
+          <div class="notif-time">${n.createdAt?timeAgo(n.createdAt.toDate()):'Just now'}</div>
+        </div>
+        ${!n.read?'<div class="notif-dot"></div>':''}
+      </div>`).join('');
+  });
+}
+function getNotifIcon(t){return{message:'💬',job_apply:'📋',job_accepted:'✅',job_posted:'💼',review:'⭐',order:'🆔',default:'🔔'}[t]||'🔔';}
+async function handleNotifClick(id,type,refId){
+  await setDoc(doc(db,'notifications',id),{read:true},{merge:true});
+  if(type==='message') showPage('chat');
+  else if(type==='job_apply'||type==='job_posted'){showPage('dashboard');switchTab('myjobs',null);}
+  else if(type==='review') openPublicProfile(currentUser.uid);
+  else showPage('dashboard');
+  document.getElementById('notifDropdown').classList.remove('open');
+}
+window.clearAllNotifs=async function(){
+  if(!currentUser) return;
+  const q=query(collection(db,'notifications'),where('toUid','==',currentUser.uid),where('read','==',false));
+  const snap=await getDocs(q);
+  const batch=writeBatch(db);
+  snap.forEach(d=>batch.update(doc(db,'notifications',d.id),{read:true}));
+  await batch.commit();
+  showToast('✅ All notifications marked as read');
+};
+window.sendNotification=async function(toUid,type,text,refId=''){
+  if(!toUid||toUid===currentUser?.uid) return;
+  await addDoc(collection(db,'notifications'),{toUid,type,text,refId,read:false,createdAt:serverTimestamp()});
+};
 
-  window.switchTab = function(tab){
-    document.querySelectorAll('.dash-tab').forEach(t=>t.classList.remove('active'));
-    document.querySelectorAll('.dash-panel').forEach(p=>p.classList.remove('active'));
-    event.target.classList.add('active');
-    document.getElementById('panel-'+tab).classList.add('active');
-  }
+// ── Utilities ──────────────────────────────────────────────────
+window.setActive=function(el){document.querySelectorAll('.cat').forEach(c=>c.classList.remove('active'));el.classList.add('active');};
+window.openModal=function(id){document.getElementById(id).classList.add('open');};
+window.closeModal=function(id){document.getElementById(id).classList.remove('open');};
+window.switchTab=function(tab,el){
+  document.querySelectorAll('.dash-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.dash-panel').forEach(p=>p.classList.remove('active'));
+  if(el) el.classList.add('active');
+  else document.querySelector(`[onclick*="switchTab('${tab}"]`)?.classList.add('active');
+  document.getElementById('panel-'+tab)?.classList.add('active');
+  if(tab==='applications') loadMyApplications();
+};
+window.showToast=function(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3200);
+};
+window.requireLogin=function(){
+  if(!currentUser){showToast('Please log in to continue');showPage('login');}
+};
+function timeAgo(d){
+  const s=Math.floor((new Date()-d)/1000);
+  if(s<60) return 'Just now';
+  if(s<3600) return Math.floor(s/60)+'m ago';
+  if(s<86400) return Math.floor(s/3600)+'h ago';
+  return Math.floor(s/86400)+'d ago';
+}
+function fmtTime(d){return d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});}
+function esc(s){
+  if(typeof s!=='string') s=String(s||'');
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+}
 
-  window.openModal = function(id){ document.getElementById(id).classList.add('open'); }
-  window.closeModal = function(id){ document.getElementById(id).classList.remove('open'); }
-
-  window.showToast = function(msg){
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.style.display = 'block';
-    setTimeout(()=>t.style.display='none', 3000);
-  }
+// ── Boot ───────────────────────────────────────────────────────
+loadHomeJobs();
 </script>
 </body>
 </html>
